@@ -1,12 +1,14 @@
 export const profile = {
   name: '김포트',
   role: 'Full Stack Developer',
-  tagline: '비즈니스를 움직이는 엔드투엔드 제품을 만듭니다',
+  tagline: '컴퓨터공학 기반의 시스템 사고로 제품을 설계합니다',
   summary:
-    '프론트엔드와 백엔드를 모두 설계하며 제품의 “기획 → 디자인 → 개발 → 운영” 흐름을 이해하고 있습니다. React · Next.js 기반의 UX와 Node · Nest · Prisma로 서비스 로직을 구축하고, CI/CD 파이프라인까지 책임집니다.',
+    '컴퓨터공학과에서 배운 운영체제 · 네트워크 · 알고리즘 지식을 실전 서비스 구조에 녹여냅니다. React · Next.js로 인터페이스를 만들고, Node · Nest · Prisma로 서버 로직과 데이터 모델을 설계하며 DevOps 파이프라인까지 책임집니다.',
   location: 'Seoul, South Korea',
   availability: '2026 Q1부터 신규 프로젝트 합류 가능',
   email: 'hello@kimfolio.dev',
+  image: '/profile.jpg', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
+  intro: '안녕하세요! 컴퓨터공학을 전공하며 시스템과 소프트웨어에 대한 깊은 이해를 바탕으로 실용적인 솔루션을 만들어가는 개발자입니다. 사용자 경험과 기술적 우아함의 균형을 추구하며, 지속 가능하고 확장 가능한 코드를 작성하는 것을 목표로 합니다.',
 }
 
 export const skills = {
@@ -17,7 +19,7 @@ export const skills = {
 
 export const projects = [
   {
-    name: 'Asura Arena (멀티플레이 슈팅)',
+    name: 'Asura Arena',
     period: '2025.02 - 진행 중',
     summary:
       'KDT 팀 프로젝트로 만든 3D 멀티플레이 아레나 슈팅 게임. Three.js로 월드를 구축하고 Socket.io로 로비·무기 드랍·전투 상태를 동기화해 최대 8명이 같은 맵에서 실시간으로 플레이할 수 있게 했습니다.',
@@ -25,6 +27,7 @@ export const projects = [
     tech: ['Three.js', 'Socket.io', 'Express', 'Node.js'],
     link: '/kdt-game/index.html',
     icon: '/kdt-game/knife_icon.png',
+    video: '', // 시연 영상 URL
   },
   {
     name: 'Insights Dashboard',
@@ -34,6 +37,8 @@ export const projects = [
     impact: '데이터 로딩 속도 38% 개선 · 구독 전환율 12% 향상',
     tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
     link: 'https://insights.example.com',
+    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    video: '', // 시연 영상 URL
   },
   {
     name: 'Creative Studio',
@@ -43,6 +48,8 @@ export const projects = [
     impact: '주간 활성 사용자 2.1배 증가',
     tech: ['Next.js', 'Framer Motion', 'Edge Functions', 'Upstash Redis'],
     link: 'https://studio.example.com',
+    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    video: '', // 시연 영상 URL
   },
   {
     name: 'Soundwave',
@@ -52,6 +59,8 @@ export const projects = [
     impact: '동시 접속 5,000명에서도 안정적인 재생 유지',
     tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
     link: 'https://soundwave.example.com',
+    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    video: '', // 시연 영상 URL
   },
   {
     name: 'Wanderlog',
@@ -61,6 +70,8 @@ export const projects = [
     impact: '런칭 3개월 만에 1,200명 유료 전환',
     tech: ['Next.js', 'OpenAI API', 'PlanetScale'],
     link: 'https://wanderlog.example.com',
+    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    video: '', // 시연 영상 URL
   },
 ]
 
