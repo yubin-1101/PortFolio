@@ -1,5 +1,5 @@
 export const profile = {
-  name: '김포트',
+  name: '조유빈',
   role: 'Full Stack Developer',
   tagline: '컴퓨터공학 기반의 시스템 사고로 제품을 설계합니다',
   summary:
@@ -22,7 +22,7 @@ export const projects = [
     name: 'Asura Arena',
     period: '2025.02 - 진행 중',
     summary:
-      'KDT 팀 프로젝트로 만든 3D 멀티플레이 아레나 슈팅 게임. Three.js로 월드를 구축하고 Socket.io로 로비·무기 드랍·전투 상태를 동기화해 최대 8명이 같은 맵에서 실시간으로 플레이할 수 있게 했습니다.',
+      'KDT(Korea Digital Training)의 일환으로 제작된 3D 온라인 멀티플레이어 격투 게임입니다. Node.js, Socket.IO, Three.js를 기반으로 구현되었으며, 플레이어는 방 생성, 캐릭터 선택, 3D 환경에서의 전투 등 다양한 기능을 즐길 수 있습니다.',
     impact: '내부 테스트에서 평균 RTT 90ms 미만 유지 · 30명 알파 테스터 피드백 반영',
     tech: ['Three.js', 'Socket.io', 'Express', 'Node.js'],
     link: '/kdt-game/index.html',

@@ -197,7 +197,7 @@ a {
   flex-direction: column;
   gap: 80px;
   position: relative;
-  background: rgba(255, 255, 255, 0.85);
+  background: transparent;
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 36px;
