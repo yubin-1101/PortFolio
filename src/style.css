@@ -101,7 +101,16 @@ a {
 
 .blog-nav {
   display: flex;
-  gap: 24px;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 50px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.08);
+  position: relative;
+  z-index: 100;
 }
 
 .blog-nav a {
@@ -109,11 +118,32 @@ a {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 200ms;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 200ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-nav a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent), rgba(59, 130, 246, 0.6));
+  opacity: 0;
+  transition: opacity 200ms ease;
+  border-radius: inherit;
+  z-index: -1;
 }
 
 .blog-nav a:hover {
-  color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.blog-nav a:hover::before {
+  opacity: 1;
 }
 
 /* 메인 레이아웃 */
@@ -835,6 +865,7 @@ a {
   
   .blog-nav a {
     font-size: 0.85rem;
+    padding: 6px 12px;
   }
   
   .blog-hero {
