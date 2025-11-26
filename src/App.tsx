@@ -11,8 +11,8 @@ function App() {
         <header className="blog-header">
           <div className="blog-header-content">
             <div className="site-title">
-              <h1>Kimfolio</h1>
-              <p>개발자의 기술 블로그</p>
+              <h1>Yubin DevLog</h1>
+              <p>기술과 열정이 만나는 공간</p>
             </div>
             <nav className="blog-nav">
               <a href="#home">Home</a>
@@ -83,8 +83,11 @@ function App() {
                   <p>{profile.summary}</p>
                   <h3>Core Skills</h3>
                   <div className="skills-showcase">
-                    {skills.core.map((skill) => (
-                      <span key={skill} className="skill-badge">{skill}</span>
+                    {skills.core.map((skill, idx) => (
+                      <span key={skill.name + '-' + idx} className="skill-badge">
+                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -101,10 +104,10 @@ function App() {
                       <h3 className="post-title">{project.name}</h3>
                       <span className="post-date">{project.period}</span>
                     </div>
-                    
-                    {project.video && (
-                      <div className="post-video">
-                        {(() => {
+                    {/* 영상 공간 항상 표시 */}
+                    <div className="post-video">
+                      {project.video ? (
+                        (() => {
                           const videoUrl = project.video;
                           if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
                             let embedUrl = '';
@@ -155,9 +158,14 @@ function App() {
                               preload="metadata"
                             />
                           );
-                        })()}
-                      </div>
-                    )}
+                        })()
+                      ) : (
+                        <div className="video-placeholder">
+                          <span style={{fontSize:'2.2rem'}}>🎬</span>
+                          <div style={{color:'#888',marginTop:'8px'}}>시연 영상 준비 중</div>
+                        </div>
+                      )}
+                    </div>
                     
                     <div className="post-content">
                       <p>{project.summary}</p>
@@ -169,7 +177,7 @@ function App() {
                     <div className="post-footer">
                       <div className="post-tags">
                         {project.tech.map((tech) => (
-                          <a key={tech} href={`#tag-${tech}`} className="post-tag">{tech}</a>
+                          <a key={tech + '-' + project.name} href={`#tag-${typeof tech === 'string' ? tech : tech.name}`} className="post-tag">{typeof tech === 'string' ? tech : tech.name}</a>
                         ))}
                       </div>
                       <a href={project.link} target="_blank" rel="noreferrer" className="read-more">View Project →</a>
@@ -208,24 +216,33 @@ function App() {
                 <div className="skill-group">
                   <h4>Backend / Full Stack</h4>
                   <div className="skill-items">
-                    {skills.core.map((skill) => (
-                      <span key={skill} className="skill-item">{skill}</span>
+                    {skills.core.map((skill, idx) => (
+                      <span key={skill.name + '-' + idx} className="skill-item">
+                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </div>
                 <div className="skill-group">
                   <h4>UI / UX</h4>
                   <div className="skill-items">
-                    {skills.ui.map((skill) => (
-                      <span key={skill} className="skill-item">{skill}</span>
+                    {skills.ui.map((skill, idx) => (
+                      <span key={skill.name + '-' + idx} className="skill-item">
+                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </div>
                 <div className="skill-group">
                   <h4>DevOps & Infrastructure</h4>
                   <div className="skill-items">
-                    {skills.tooling.map((skill) => (
-                      <span key={skill} className="skill-item">{skill}</span>
+                    {skills.tooling.map((skill, idx) => (
+                      <span key={skill.name + '-' + idx} className="skill-item">
+                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </div>

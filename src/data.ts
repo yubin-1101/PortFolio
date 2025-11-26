@@ -12,14 +12,34 @@ export const profile = {
 }
 
 export const skills = {
-  core: ['TypeScript', 'React', 'Next.js', 'Node.js', 'NestJS', 'Prisma'],
-  ui: ['Tailwind CSS', 'Framer Motion', 'Storybook', 'Figma', 'Design System'],
-  tooling: ['PostgreSQL', 'Redis', 'AWS', 'Docker', 'GitHub Actions', 'Vercel'],
+  core: [
+    { name: 'TypeScript', icon: '/icons/typescript.svg' },
+    { name: 'React', icon: '/icons/react.svg' },
+    { name: 'Next.js', icon: '/icons/nextjs.svg' },
+    { name: 'Node.js', icon: '/icons/nodejs.svg' },
+    { name: 'NestJS', icon: '/icons/nestjs.svg' },
+    { name: 'Prisma', icon: '/icons/prisma.svg' },
+  ],
+  ui: [
+    { name: 'Tailwind CSS', icon: '/icons/tailwind.svg' },
+    { name: 'Framer Motion', icon: '/icons/framer.svg' },
+    { name: 'Storybook', icon: '/icons/storybook.svg' },
+    { name: 'Figma', icon: '/icons/figma.svg' },
+    { name: 'Design System', icon: '/icons/designsystem.svg' },
+  ],
+  tooling: [
+    { name: 'PostgreSQL', icon: '/icons/postgresql.svg' },
+    { name: 'Redis', icon: '/icons/redis.svg' },
+    { name: 'AWS', icon: '/icons/aws.svg' },
+    { name: 'Docker', icon: '/icons/docker.svg' },
+    { name: 'GitHub Actions', icon: '/icons/githubactions.svg' },
+    { name: 'Vercel', icon: '/icons/vercel.svg' },
+  ],
 }
 
 export const projects = [
   {
-    name: 'Asura Arena',
+    name: '3D Community',
     period: '2025.02 - 진행 중',
     summary:
       'KDT(Korea Digital Training)의 일환으로 제작된 3D 온라인 멀티플레이어 격투 게임입니다. Node.js, Socket.IO, Three.js를 기반으로 구현되었으며, 플레이어는 방 생성, 캐릭터 선택, 3D 환경에서의 전투 등 다양한 기능을 즐길 수 있습니다.',
@@ -30,7 +50,7 @@ export const projects = [
     video: '', // 시연 영상 URL
   },
   {
-    name: 'Insights Dashboard',
+    name: 'CVS(편의점 관리 시스템)',
     period: '2024.06 - 2024.09',
     summary:
       'B2B 고객이 실시간 지표를 확인할 수 있는 데이터 모니터링 대시보드. 서버에서는 NestJS와 Prisma로 멀티 테넌트 쿼리를 최적화하고, 프론트는 가상 스크롤로 가볍게 렌더링했습니다.',
@@ -41,7 +61,7 @@ export const projects = [
     video: '', // 시연 영상 URL
   },
   {
-    name: 'Creative Studio',
+    name: '근로자 근무 관리 어플',
     period: '2024.03 - 2024.05',
     summary:
       '포트폴리오 크리에이터를 위한 웹 에디터. 블록 기반 컴포저를 만들어 사용자 맞춤 템플릿을 쉽게 조합하고, 서버는 Edge Runtime으로 짧은 응답 시간을 유지했습니다.',
@@ -52,7 +72,7 @@ export const projects = [
     video: '', // 시연 영상 URL
   },
   {
-    name: 'Soundwave',
+    name: 'Asura Arena',
     period: '2023.11 - 2024.01',
     summary:
       '실시간 협업 플레이리스트 서비스. WebSocket 기반으로 큐를 동기화하고, 서버리스 함수에서 DRM 토큰을 발급했습니다.',
