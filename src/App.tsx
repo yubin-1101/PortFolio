@@ -5,23 +5,19 @@ import { useState, useEffect } from 'react';
 function App() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // 위로 스크롤할 때 헤더 보이기
-      if (currentScrollY < lastScrollY) {
+      // 정확히 페이지 맨 위(0px)일 때만 헤더 보이기
+      if (currentScrollY === 0) {
         setIsHeaderVisible(true);
-      } 
-      // 아래로 스크롤할 때 헤더 숨기기 (최상단이 아닐 때)
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsHeaderVisible(false);
       }
-      
-      // 최상단일 때는 항상 헤더 보이기
-      if (currentScrollY < 100) {
-        setIsHeaderVisible(true);
+      // 그 외에는 헤더 숨기기
+      else {
+        setIsHeaderVisible(false);
       }
       
       setLastScrollY(currentScrollY);
@@ -147,12 +143,6 @@ function App() {
                     {/* 왼쪽: 프로젝트 배경 영역 */}
                     <div className="project-card-left">
                       <div className="project-card-bg">
-                        {/* LIVE 배지 */}
-                        <div className="live-badge">
-                          <span className="live-dot"></span>
-                          LIVE
-                        </div>
-                        
                         {/* 프로젝트 아이콘/제목 */}
                         <div className="project-card-header">
                           {project.icon ? (
@@ -232,13 +222,9 @@ function App() {
 
                     {/* 오른쪽: 프로젝트 정보 영역 */}
                     <div className="project-card-right">
-                      {/* 설명 */}
-                      <p className="project-description">{project.summary}</p>
 
-                      {/* 영향도 */}
-                      <div className="project-impact">
-                        <span>✨ {project.impact}</span>
-                      </div>
+                      {/* 설명만 표시 */}
+                      <p className="project-description">{project.summary}</p>
 
                       {/* 기술 스택 */}
                       <div className="project-tech-section">
@@ -265,18 +251,17 @@ function App() {
 
                       {/* 액션 버튼 */}
                       <div className="project-actions">
-                        <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-primary">
+                        <button 
+                          onClick={() => setSelectedProject(project)}
+                          className="btn btn-primary"
+                        >
                           <span>▶️</span>
                           상세 보기
-                        </a>
+                        </button>
                         <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-secondary">
                           <span>🔗</span>
                           라이브 데모
                         </a>
-                        <button className="btn btn-tertiary">
-                          <span>📄</span>
-                          문서
-                        </button>
                       </div>
                     </div>
                   </article>
@@ -404,6 +389,90 @@ function App() {
         <footer className="blog-footer">
           <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
         </footer>
+
+        {/* 상세 보기 모달 */}
+        {selectedProject && (
+          <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={() => setSelectedProject(null)}>✕</button>
+              
+              <div className="modal-header">
+                <div className="modal-icon">
+                  {selectedProject.icon ? (
+                    <img src={selectedProject.icon} alt={selectedProject.name} />
+                  ) : (
+                    <span>📦</span>
+                  )}
+                </div>
+                <div className="modal-title-section">
+                  <h2>{selectedProject.name}</h2>
+                  <p className="modal-period">{selectedProject.period}</p>
+                </div>
+              </div>
+
+              <div className="modal-body">
+                {/* 설명 */}
+                <section className="modal-section">
+                  <h3>📖 프로젝트 설명</h3>
+                  <p>{selectedProject.summary}</p>
+                </section>
+
+                {/* 주요 기능 */}
+                {(selectedProject as any).features && (selectedProject as any).features.length > 0 && (
+                  <section className="modal-section">
+                    <h3>✨ 주요 기능</h3>
+                    <ul className="feature-list">
+                      {(selectedProject as any).features.map((feature: string, idx: number) => (
+                        <li key={idx}>{feature}</li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {/* 영향도 */}
+                <section className="modal-section">
+                  <h3>💫 프로젝트 영향도</h3>
+                  <p className="impact-highlight">{selectedProject.impact}</p>
+                </section>
+
+                {/* 기술 스택 */}
+                <section className="modal-section">
+                  <h3>🛠️ 기술 스택</h3>
+                  <div className="modal-tech-tags">
+                    {selectedProject.tech.map((tech, idx) => {
+                      const techName = typeof tech === 'string' ? tech : (tech as any)?.name || '';
+                      return (
+                        <span key={idx} className="modal-tech-badge">
+                          {techName}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </section>
+
+                {/* 액션 */}
+                <div className="modal-actions">
+                  <a 
+                    href={selectedProject.link} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="btn btn-primary"
+                  >
+                    <span>🔗</span>
+                    라이브 데모 방문
+                  </a>
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="btn btn-secondary"
+                  >
+                    <span>✕</span>
+                    닫기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

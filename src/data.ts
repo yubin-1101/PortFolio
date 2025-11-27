@@ -43,6 +43,12 @@ export const projects = [
     period: '2025.02 - 진행 중',
     summary:
       'KDT(Korea Digital Training)의 일환으로 제작된 3D 온라인 멀티플레이어 격투 게임입니다. Node.js, Socket.IO, Three.js를 기반으로 구현되었으며, 플레이어는 방 생성, 캐릭터 선택, 3D 환경에서의 전투 등 다양한 기능을 즐길 수 있습니다.',
+    features: [
+      '실시간 멀티플레이어 3D 격투 게임',
+      'Socket.IO 기반 낮은 지연시간 동기화',
+      '캐릭터 커스터마이징 및 스킬 시스템',
+      '파티 매칭 및 방 관리 기능',
+    ],
     impact: '내부 테스트에서 평균 RTT 90ms 미만 유지 · 30명 알파 테스터 피드백 반영',
     tech: ['Three.js', 'Socket.io', 'Express', 'Node.js'],
     link: '/kdt-game/index.html',
@@ -54,6 +60,12 @@ export const projects = [
     period: '2024.06 - 2024.09',
     summary:
       'B2B 고객이 실시간 지표를 확인할 수 있는 데이터 모니터링 대시보드. 서버에서는 NestJS와 Prisma로 멀티 테넌트 쿼리를 최적화하고, 프론트는 가상 스크롤로 가볍게 렌더링했습니다.',
+    features: [
+      '실시간 판매 데이터 모니터링 대시보드',
+      '다중 지점 통계 및 비교 분석',
+      'CSV 내보내기 및 자동 보고서 생성',
+      '멀티 테넌트 권한 관리 시스템',
+    ],
     impact: '데이터 로딩 속도 38% 개선 · 구독 전환율 12% 향상',
     tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
     link: 'https://insights.example.com',
@@ -65,6 +77,12 @@ export const projects = [
     period: '2024.03 - 2024.05',
     summary:
       '포트폴리오 크리에이터를 위한 웹 에디터. 블록 기반 컴포저를 만들어 사용자 맞춤 템플릿을 쉽게 조합하고, 서버는 Edge Runtime으로 짧은 응답 시간을 유지했습니다.',
+    features: [
+      '드래그 앤 드롭 블록 기반 에디터',
+      '실시간 미리보기 및 템플릿 저장',
+      '협업 편집 및 버전 관리',
+      'Edge Runtime 기반 고속 배포',
+    ],
     impact: '주간 활성 사용자 2.1배 증가',
     tech: ['Next.js', 'Framer Motion', 'Edge Functions', 'Upstash Redis'],
     link: 'https://studio.example.com',
@@ -76,6 +94,12 @@ export const projects = [
     period: '2023.11 - 2024.01',
     summary:
       '실시간 협업 플레이리스트 서비스. WebSocket 기반으로 큐를 동기화하고, 서버리스 함수에서 DRM 토큰을 발급했습니다.',
+    features: [
+      '실시간 협업 플레이리스트 동기화',
+      'WebSocket 기반 즉시 업데이트',
+      'DRM 토큰 자동 발급 및 관리',
+      '5,000명 동시 접속 최적화',
+    ],
     impact: '동시 접속 5,000명에서도 안정적인 재생 유지',
     tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
     link: 'https://soundwave.example.com',
@@ -87,6 +111,12 @@ export const projects = [
     period: '2023.07 - 2023.09',
     summary:
       '여행 일정을 자동으로 추천해 주는 마이크로 SaaS. OpenAI + Google Places API를 통합하고, AI 프롬프트 결과를 시각적으로 구조화했습니다.',
+    features: [
+      'AI 기반 여행 일정 자동 생성',
+      'OpenAI와 Google Places API 통합',
+      '지도 시각화 및 일정 관리',
+      '개인화된 여행 추천 알고리즘',
+    ],
     impact: '런칭 3개월 만에 1,200명 유료 전환',
     tech: ['Next.js', 'OpenAI API', 'PlanetScale'],
     link: 'https://wanderlog.example.com',
