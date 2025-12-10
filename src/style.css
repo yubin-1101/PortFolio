@@ -1844,6 +1844,107 @@ a {
   opacity: 0;
 }
 
+.modal-section-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.modal-description-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-description-left h3 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-description-left p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.modal-test-accounts {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-test-accounts h3 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.test-account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.test-account-item {
+  padding: 14px 16px;
+  background: white;
+  border-left: 4px solid #3b82f6;
+  border-radius: 6px;
+  color: #475569;
+}
+
+.account-role {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.account-email {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #3b82f6;
+  word-break: break-all;
+  margin-bottom: 6px;
+}
+
+.account-password {
+  display: flex;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.pwd-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pwd-value {
+  font-family: 'Courier New', monospace;
+  color: #1e293b;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .modal-section-split {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 .modal-section:nth-child(1) { animation-delay: 0.2s; }
 .modal-section:nth-child(2) { animation-delay: 0.3s; }
 .modal-section:nth-child(3) { animation-delay: 0.4s; }
@@ -2334,6 +2435,41 @@ a {
 
 .dark-mode .modal-section h3 {
   color: var(--text-primary);
+}
+
+.dark-mode .modal-description-left h3,
+.dark-mode .modal-description-left p {
+  color: #ffffff;
+}
+
+.dark-mode .modal-test-accounts {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.dark-mode .modal-test-accounts h3 {
+  color: #ffffff;
+}
+
+.dark-mode .test-account-item {
+  background: rgba(30, 41, 59, 0.8);
+  border-left-color: #60a5fa;
+}
+
+.dark-mode .account-role {
+  color: #ffffff;
+}
+
+.dark-mode .account-email {
+  color: #60a5fa;
+}
+
+.dark-mode .pwd-label {
+  color: #cbd5e1;
+}
+
+.dark-mode .pwd-value {
+  color: #e2e8f0;
 }
 
 .dark-mode .modal-tech-badge {

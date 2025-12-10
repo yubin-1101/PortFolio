@@ -60,7 +60,7 @@ export const projects = [
     name: 'CVS(편의점 관리 시스템)',
     period: '2024.06 - 2024.09',
     summary:
-      'B2B 고객이 실시간 지표를 확인할 수 있는 데이터 모니터링 대시보드. 서버에서는 NestJS와 Prisma로 멀티 테넌트 쿼리를 최적화하고, 프론트는 가상 스크롤로 가볍게 렌더링했습니다.',
+      'B2B 고객이 실시간 지표를 확인할 수 있는 데이터 모니터링 대시보드. 서버에서는 NestJS와 Prisma로 멀티 테넌트 쿼리를 최적화하고, 프론트는 가상 스크롤로 가볍게 렌더링했습니다.\n\n고객 - customer@test.com | 111111\n점주 - store@test.com | 111111\n관리자 - admin@test.com | 111111',
     features: [
       '실시간 판매 데이터 모니터링 대시보드',
       '다중 지점 통계 및 비교 분석',
@@ -69,7 +69,7 @@ export const projects = [
     ],
     impact: '데이터 로딩 속도 38% 개선 · 구독 전환율 12% 향상',
     tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
-    link: 'https://insights.example.com',
+    link: 'https://conviproject.netlify.app/customer',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
     thumbnail: '',
@@ -105,7 +105,7 @@ export const projects = [
     ],
     impact: '동시 접속 5,000명에서도 안정적인 재생 유지',
     tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
-    link: 'https://soundwave.example.com',
+    link: 'https://asuragame.netlify.app/',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
     thumbnail: '',

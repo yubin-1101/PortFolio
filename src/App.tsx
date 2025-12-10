@@ -430,9 +430,32 @@ function App() {
 
               <div className="modal-body">
                 {/* 설명 */}
-                <section className="modal-section">
-                  <h3>📖 프로젝트 설명</h3>
-                  <p>{selectedProject.summary}</p>
+                <section className="modal-section modal-section-split">
+                  <div className="modal-description-left">
+                    <h3>📖 프로젝트 설명</h3>
+                    <p>{selectedProject.summary.split('\n\n')[0]}</p>
+                  </div>
+                  {selectedProject.summary.includes('|') && (
+                    <div className="modal-test-accounts">
+                      <h3>🔐 테스트 계정</h3>
+                      <div className="test-account-list">
+                        {selectedProject.summary.split('\n').slice(2).map((line, idx) => {
+                          const [role, credentials] = line.split(' - ');
+                          const [email, password] = credentials.split(' | ');
+                          return (
+                            <div key={idx} className="test-account-item">
+                              <div className="account-role">{role}</div>
+                              <div className="account-email">{email}</div>
+                              <div className="account-password">
+                                <span className="pwd-label">비밀번호:</span>
+                                <span className="pwd-value">{password}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </section>
 
                 {/* 주요 기능 */}
