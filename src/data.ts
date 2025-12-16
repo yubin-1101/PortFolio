@@ -6,7 +6,7 @@ export const profile = {
     '견고한 백엔드 아키텍처와 데이터 모델 설계가 제 강점입니다. Node.js, NestJS, Prisma로 고성능 서버를 구축하고, PostgreSQL과 Redis로 데이터를 효율적으로 관리합니다. 필요시 React, Next.js로 풀스택 개발도 가능하며, AWS와 Docker 기반 DevOps 파이프라인 구축 경험이 있습니다.',
   location: 'Seoul, South Korea',
   availability: '2026 Q1부터 신규 프로젝트 합류 가능',
-  email: 'hello@kimfolio.dev',
+  email: 'binss0124@gmail.com',
   image: '/profile.png', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
   intro: '안녕하세요! 백엔드와 풀스택 개발에 열정을 가진 개발자 조유빈입니다. 시스템 설계, 데이터 모델링, API 아키텍처에 집중하며, 사용자가 신뢰할 수 있는 견고한 서비스를 만드는 것을 목표로 합니다. 확장 가능한 코드 작성과 성능 최적화를 중요하게 생각합니다.',
 }

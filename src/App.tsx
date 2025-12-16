@@ -1,521 +1,698 @@
 import { contact, experience, profile, projects, skills } from './data'
-import DynamicBackground from './DynamicBackground';
 import { useState, useEffect } from 'react';
 
 function App() {
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [terminalLines, setTerminalLines] = useState<string[]>([]);
+  const [isTyping, setIsTyping] = useState(true);
 
+  // 터미널 타이핑 효과
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark-mode');
-    } else {
-      document.documentElement.classList.remove('dark-mode');
-    }
-  }, [isDarkMode]);
+    const lines = [
+      '> Initializing portfolio...',
+      '> Loading developer profile...',
+      `> Welcome, ${profile.name}`,
+      '> Status: Ready for new opportunities',
+      '> Type "help" for available commands'
+    ];
+    
+    let currentLine = 0;
+    const interval = setInterval(() => {
+      if (currentLine < lines.length) {
+        setTerminalLines(prev => [...prev, lines[currentLine]]);
+        currentLine++;
+      } else {
+        setIsTyping(false);
+        clearInterval(interval);
+      }
+    }, 400);
 
+    return () => clearInterval(interval);
+  }, []);
+
+  // 스크롤 감지로 활성 섹션 업데이트
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // 정확히 페이지 맨 위(0px)일 때만 헤더 보이기
-      if (currentScrollY === 0) {
-        setIsHeaderVisible(true);
+      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+            setActiveSection(section);
+            break;
+          }
+        }
       }
-      // 그 외에는 헤더 숨기기
-      else {
-        setIsHeaderVisible(false);
-      }
-      
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
-  const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'ai'>('frontend');
-  // 프론트엔드/백엔드/AI&툴 기술 분류
-  const frontendSkills = [
-    skills.core.find(s => s.name === 'TypeScript'),
-    skills.core.find(s => s.name === 'React'),
-    skills.core.find(s => s.name === 'Next.js'),
-    ...skills.ui,
-  ].filter(Boolean);
-  const backendSkills = [
-    skills.core.find(s => s.name === 'Node.js'),
-    skills.core.find(s => s.name === 'NestJS'),
-    skills.core.find(s => s.name === 'Prisma'),
-    ...skills.tooling,
-  ].filter(Boolean);
-  // AI & Tools는 tooling 전체로 대체
-  const aiSkills = [...skills.tooling].filter(Boolean);
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <>
-      <DynamicBackground />
-      <div className="blog-layout">
-        {/* 블로그 헤더 */}
-        <header className={`blog-header ${isHeaderVisible ? 'visible' : 'hidden'}`}>
-          <div className="blog-header-content">
-            <div className="site-title">
-              <h1>Yubin DevLog</h1>
-              <p>기술과 열정이 만나는 공간</p>
-            </div>
-            <div className="header-controls">
-              <nav className="blog-nav">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#experience">Experience</a>
-                <a href="#contact">Contact</a>
-              </nav>
-              <button 
-                onClick={() => setIsDarkMode(!isDarkMode)} 
-                className="dark-mode-toggle"
-                title={isDarkMode ? '라이트 모드' : '다크 모드'}
-              >
-                {isDarkMode ? '☀️' : '🌙'}
-              </button>
-            </div>
+    <div className="dev-portfolio">
+      {/* 사이드바 - VS Code 스타일 */}
+      <aside className="sidebar">
+        <div className="sidebar-icons">
+          <button 
+            className={`sidebar-icon ${activeSection === 'home' ? 'active' : ''}`}
+            onClick={() => scrollToSection('home')}
+            title="Home"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+          </button>
+          <button 
+            className={`sidebar-icon ${activeSection === 'about' ? 'active' : ''}`}
+            onClick={() => scrollToSection('about')}
+            title="About"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </button>
+          <button 
+            className={`sidebar-icon ${activeSection === 'skills' ? 'active' : ''}`}
+            onClick={() => scrollToSection('skills')}
+            title="Skills"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+            </svg>
+          </button>
+          <button 
+            className={`sidebar-icon ${activeSection === 'projects' ? 'active' : ''}`}
+            onClick={() => scrollToSection('projects')}
+            title="Projects"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+            </svg>
+          </button>
+          <button 
+            className={`sidebar-icon ${activeSection === 'experience' ? 'active' : ''}`}
+            onClick={() => scrollToSection('experience')}
+            title="Experience"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+            </svg>
+          </button>
+          <button 
+            className={`sidebar-icon ${activeSection === 'contact' ? 'active' : ''}`}
+            onClick={() => scrollToSection('contact')}
+            title="Contact"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </button>
+        </div>
+        <div className="sidebar-bottom">
+          <a href={contact.github} target="_blank" rel="noreferrer" className="sidebar-icon" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </aside>
+
+      {/* 메인 영역 */}
+      <main className="main-content">
+        {/* 탭 바 */}
+        <div className="tab-bar">
+          <div className="tabs">
+            <button 
+              className={`tab ${activeSection === 'home' ? 'active' : ''}`}
+              onClick={() => scrollToSection('home')}
+            >
+              <span className="tab-icon">🏠</span>
+              index.tsx
+            </button>
+            <button 
+              className={`tab ${activeSection === 'about' ? 'active' : ''}`}
+              onClick={() => scrollToSection('about')}
+            >
+              <span className="tab-icon">👤</span>
+              about.md
+            </button>
+            <button 
+              className={`tab ${activeSection === 'skills' ? 'active' : ''}`}
+              onClick={() => scrollToSection('skills')}
+            >
+              <span className="tab-icon">⚡</span>
+              skills.json
+            </button>
+            <button 
+              className={`tab ${activeSection === 'projects' ? 'active' : ''}`}
+              onClick={() => scrollToSection('projects')}
+            >
+              <span className="tab-icon">📁</span>
+              projects/
+            </button>
+            <button 
+              className={`tab ${activeSection === 'experience' ? 'active' : ''}`}
+              onClick={() => scrollToSection('experience')}
+            >
+              <span className="tab-icon">💼</span>
+              experience.log
+            </button>
+            <button 
+              className={`tab ${activeSection === 'contact' ? 'active' : ''}`}
+              onClick={() => scrollToSection('contact')}
+            >
+              <span className="tab-icon">📧</span>
+              contact.sh
+            </button>
           </div>
-        </header>
+          <div className="window-controls">
+            <span className="control minimize"></span>
+            <span className="control maximize"></span>
+            <span className="control close"></span>
+          </div>
+        </div>
 
-        {/* 메인 레이아웃 */}
-        <div className="blog-main">
-          {/* 사이드바 */}
-          <aside className="blog-sidebar">
-            {/* 작가 소개 */}
-            <div className="author-card">
-              <img 
-                src={profile.image || '/placeholder-profile.jpg'} 
-                alt={profile.name}
-                className="author-image"
-                onError={(e) => {
-                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjVmOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Qcm9maWxlPC90ZXh0Pjwvc3ZnPg==';
-                }}
-              />
-              <h3>{profile.name}</h3>
-              <p className="author-role">{profile.role}</p>
-              <p className="author-bio">{profile.intro}</p>
-              <div className="author-stats">
-                <div className="stat">
-                  <span className="stat-label">Projects</span>
-                  <span className="stat-value">{projects.length}</span>
+        {/* 브레드크럼 */}
+        <div className="breadcrumb">
+          <span className="path">~/portfolio</span>
+          <span className="separator">/</span>
+          <span className="current">{activeSection}</span>
+        </div>
+
+        {/* 콘텐츠 영역 */}
+        <div className="content-area">
+          {/* Hero Section */}
+          <section id="home" className="section hero-section">
+            <div className="terminal-window">
+              <div className="terminal-header">
+                <div className="terminal-buttons">
+                  <span className="btn-red"></span>
+                  <span className="btn-yellow"></span>
+                  <span className="btn-green"></span>
                 </div>
-                <div className="stat">
-                  <span className="stat-label">Experience</span>
-                  <span className="stat-value">{experience.length}</span>
-                </div>
+                <span className="terminal-title">zsh - portfolio</span>
               </div>
-              <div className="author-links">
-                <a href={contact.github} target="_blank" rel="noreferrer" title="GitHub">🐙</a>
-                <a href={contact.linkedIn} target="_blank" rel="noreferrer" title="LinkedIn">💼</a>
-                <a href={`mailto:${contact.email}`} title="Email">✉️</a>
+              <div className="terminal-body">
+                {terminalLines.map((line, idx) => (
+                  <div key={idx} className="terminal-line">
+                    <span className={line && typeof line === 'string' && line.startsWith('>') ? 'command' : 'output'}>{line || ''}</span>
+                  </div>
+                ))}
+                {isTyping && <span className="cursor">▋</span>}
               </div>
             </div>
 
-
-          </aside>
-
-          {/* 메인 컨텐츠 */}
-          <main className="blog-content">
-            {/* 홈 배너 */}
-            <section id="home" className="blog-hero">
-              <h1>{profile.tagline}</h1>
-              <p className="hero-subtitle">{profile.summary}</p>
-              <div className="hero-meta">
-                <span>📍 {profile.location}</span>
-                <span>🕐 {profile.availability}</span>
+            <div className="hero-content">
+              <div className="hero-avatar">
+                <img 
+                  src={profile.image || '/placeholder-profile.jpg'} 
+                  alt={profile.name}
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzFhMWIyNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM3YWE2ZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5EZXY8L3RleHQ+PC9zdmc+';
+                  }}
+                />
+                <div className="status-badge">
+                  <span className="status-dot"></span>
+                  Available
+                </div>
               </div>
-            </section>
+              <div className="hero-info">
+                <h1 className="glitch" data-text={profile.name}>{profile.name}</h1>
+                <p className="role">
+                  <span className="keyword">const</span> role = <span className="string">"{profile.role}"</span>;
+                </p>
+                <p className="tagline">{profile.tagline}</p>
+                <div className="hero-meta">
+                  <span className="meta-item">
+                    <span className="meta-icon">📍</span>
+                    {profile.location}
+                  </span>
+                  <span className="meta-item">
+                    <span className="meta-icon">🕐</span>
+                    {profile.availability}
+                  </span>
+                </div>
+                <div className="hero-actions">
+                  <button className="btn-primary" onClick={() => scrollToSection('projects')}>
+                    <span className="btn-icon">{'{'}</span>
+                    View Projects
+                    <span className="btn-icon">{'}'}</span>
+                  </button>
+                  <a href={`mailto:${contact.email}`} className="btn-secondary">
+                    <span className="btn-icon">$</span>
+                    Contact Me
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
 
-            {/* 카테고리 섹션 완전 제거 */}
+          {/* About Section */}
+          <section id="about" className="section">
+            <div className="section-header">
+              <span className="line-number">01</span>
+              <h2>
+                <span className="comment">{'// '}</span>
+                About Me
+              </h2>
+            </div>
+            <div className="code-block">
+              <div className="code-content">
+                <div className="code-line">
+                  <span className="line-num">1</span>
+                  <span className="keyword">class</span> <span className="class-name">Developer</span> {'{'}
+                </div>
+                <div className="code-line">
+                  <span className="line-num">2</span>
+                  <span className="property">  name</span> = <span className="string">"{profile.name}"</span>;
+                </div>
+                <div className="code-line">
+                  <span className="line-num">3</span>
+                  <span className="property">  role</span> = <span className="string">"{profile.role}"</span>;
+                </div>
+                <div className="code-line">
+                  <span className="line-num">4</span>
+                  <span className="property">  location</span> = <span className="string">"{profile.location}"</span>;
+                </div>
+                <div className="code-line">
+                  <span className="line-num">5</span>
+                </div>
+                <div className="code-line">
+                  <span className="line-num">6</span>
+                  <span className="keyword">  constructor</span>() {'{'}
+                </div>
+                <div className="code-line">
+                  <span className="line-num">7</span>
+                  <span className="comment">    // {profile.intro}</span>
+                </div>
+                <div className="code-line">
+                  <span className="line-num">8</span>
+                  {'}'}
+                </div>
+                <div className="code-line">
+                  <span className="line-num">9</span>
+                {'}'}
+                </div>
+              </div>
+            </div>
+            <div className="about-summary">
+              <p>{profile.summary}</p>
+            </div>
+          </section>
 
-            {/* About 섹션 */}
-            <section id="about" className="blog-section">
-              <h2>👋 About Me</h2>
-              <article className="blog-post">
-                <div className="post-content">
-                  <p>{profile.summary}</p>
-                  <h3>Core Skills</h3>
-                  <div className="skills-showcase">
-                    {skills.core.map((skill, idx) => (
-                      <span key={skill.name + '-' + idx} className="skill-badge">
-                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                        {skill.name}
+          {/* Skills Section */}
+          <section id="skills" className="section">
+            <div className="section-header">
+              <span className="line-number">02</span>
+              <h2>
+                <span className="comment">{'// '}</span>
+                Tech Stack
+              </h2>
+            </div>
+            
+            <div className="skills-container">
+              <div className="skill-category">
+                <div className="category-header">
+                  <span className="folder-icon">📂</span>
+                  <span className="category-name">core/</span>
+                </div>
+                <div className="skill-grid">
+                  {skills.core.map((skill) => (
+                    <div key={skill.name} className="skill-card">
+                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                      <span className="skill-name">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="skill-category">
+                <div className="category-header">
+                  <span className="folder-icon">📂</span>
+                  <span className="category-name">ui/</span>
+                </div>
+                <div className="skill-grid">
+                  {skills.ui.map((skill) => (
+                    <div key={skill.name} className="skill-card">
+                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                      <span className="skill-name">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="skill-category">
+                <div className="category-header">
+                  <span className="folder-icon">📂</span>
+                  <span className="category-name">tooling/</span>
+                </div>
+                <div className="skill-grid">
+                  {skills.tooling.map((skill) => (
+                    <div key={skill.name} className="skill-card">
+                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                      <span className="skill-name">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Projects Section */}
+          <section id="projects" className="section">
+            <div className="section-header">
+              <span className="line-number">03</span>
+              <h2>
+                <span className="comment">{'// '}</span>
+                Projects
+              </h2>
+            </div>
+            
+            <div className="projects-grid">
+              {projects.map((project, index) => (
+                <article key={project.name} className="project-card">
+                  <div className="project-header">
+                    <div className="project-index">
+                      <span className="bracket">[</span>
+                      <span className="index">{index}</span>
+                      <span className="bracket">]</span>
+                    </div>
+                    <div className="project-title-area">
+                      <h3>{project.name}</h3>
+                      <span className="project-period">{project.period}</span>
+                    </div>
+                    {project.icon && (
+                      <img src={project.icon} alt={project.name} className="project-icon" />
+                    )}
+                  </div>
+
+                  <div className="project-video-wrapper">
+                    {project.video ? (
+                      (() => {
+                        const videoUrl = project.video;
+                        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                          let embedUrl = '';
+                          if (videoUrl.includes('youtube.com/embed')) {
+                            embedUrl = videoUrl;
+                          } else if (videoUrl.includes('youtu.be/')) {
+                            const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
+                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                          } else if (videoUrl.includes('youtube.com/watch')) {
+                            const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
+                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                          }
+                          return (
+                            <iframe
+                              src={embedUrl}
+                              title={`${project.name} 시연 영상`}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="project-video"
+                            />
+                          );
+                        }
+                        return (
+                          <video src={videoUrl} controls className="project-video" preload="metadata" />
+                        );
+                      })()
+                    ) : (
+                      <div className="video-placeholder">
+                        <span className="placeholder-icon">{'</>'}</span>
+                        <span className="placeholder-text">Preview</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="project-summary">{project.summary.split('\n\n')[0]}</p>
+
+                  <div className="project-tech">
+                    {project.tech.map((tech) => (
+                      <span key={typeof tech === 'string' ? tech : (tech as any).name} className="tech-tag">
+                        {typeof tech === 'string' ? tech : (tech as any).name}
                       </span>
                     ))}
                   </div>
-                </div>
-              </article>
-            </section>
 
-            {/* Projects 섹션 */}
-            <section id="projects" className="blog-section">
-              <h2>📝 Featured Projects</h2>
-              <div className="blog-posts">
-                {projects.slice(0, 5).map((project) => (
-                  <article key={project.name} className="project-card-modern">
-                    {/* 왼쪽: 프로젝트 배경 영역 */}
-                    <div className="project-card-left">
-                      <div className="project-card-bg">
-                        {/* 프로젝트 아이콘/제목 */}
-                        <div className="project-card-header">
-                          {project.icon ? (
-                            <img src={project.icon} alt={project.name} className="project-icon" />
-                          ) : (
-                            <div className="project-icon-placeholder">📦</div>
-                          )}
-                          <div className="project-card-title">
-                            <h3>{project.name}</h3>
-                            <p>{project.period}</p>
-                          </div>
-                        </div>
+                  <div className="project-impact">
+                    <span className="impact-icon">📈</span>
+                    <span className="impact-text">{project.impact}</span>
+                  </div>
 
-                        {/* 비디오 공간 */}
-                        <div className="project-video-container">
-                          {project.video ? (
-                            (() => {
-                              const videoUrl = project.video;
-                              if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                                let embedUrl = '';
-                                if (videoUrl.includes('youtube.com/embed')) {
-                                  embedUrl = videoUrl;
-                                } else if (videoUrl.includes('youtu.be/')) {
-                                  const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
-                                  embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                                } else if (videoUrl.includes('youtube.com/watch')) {
-                                  const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
-                                  embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                                }
-                                return (
-                                  <iframe
-                                    src={embedUrl}
-                                    title={`${project.name} 시연 영상`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="project-video"
-                                  />
-                                );
-                              }
-                              if (videoUrl.includes('vimeo.com')) {
-                                let embedUrl = '';
-                                if (videoUrl.includes('player.vimeo.com')) {
-                                  embedUrl = videoUrl;
-                                } else {
-                                  const videoId = videoUrl.split('vimeo.com/')[1]?.split('?')[0] || '';
-                                  embedUrl = `https://player.vimeo.com/video/${videoId}`;
-                                }
-                                return (
-                                  <iframe
-                                    src={embedUrl}
-                                    title={`${project.name} 시연 영상`}
-                                    frameBorder="0"
-                                    allow="autoplay; fullscreen; picture-in-picture"
-                                    allowFullScreen
-                                    className="project-video"
-                                  />
-                                );
-                              }
-                              return (
-                                <video
-                                  src={videoUrl}
-                                  controls
-                                  className="project-video"
-                                  preload="metadata"
-                                />
-                              );
-                            })()
-                          ) : (
-                            <div className="project-video-placeholder">
-                              <span>🎬</span>
-                            </div>
-                          )}
-                        </div>
+                  <div className="project-actions">
+                    <button 
+                      className="action-btn details"
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      <span>{'{ }'}</span> Details
+                    </button>
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="action-btn demo"
+                    >
+                      <span>→</span> Live Demo
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Experience Section */}
+          <section id="experience" className="section">
+            <div className="section-header">
+              <span className="line-number">04</span>
+              <h2>
+                <span className="comment">{'// '}</span>
+                Experience
+              </h2>
+            </div>
+            
+            <div className="experience-list">
+              {experience.map((exp, index) => (
+                <div key={exp.company} className="experience-item">
+                  <div className="exp-timeline">
+                    <div className="timeline-dot"></div>
+                    {index < experience.length - 1 && <div className="timeline-line"></div>}
+                  </div>
+                  <div className="exp-content">
+                    <div className="exp-header">
+                      <div className="exp-title">
+                        <span className="keyword">export</span> <span className="function">function</span> <span className="func-name">{exp.role.replace(/\s+/g, '')}</span>() {'{'}
                       </div>
+                      <span className="exp-period">{exp.period}</span>
                     </div>
-
-                    {/* 오른쪽: 프로젝트 정보 영역 */}
-                    <div className="project-card-right">
-
-                      {/* 설명만 표시 */}
-                      <p className="project-description">{project.summary}</p>
-
-                      {/* 기술 스택 */}
-                      <div className="project-tech-section">
-                        <h4>기술 스택</h4>
-                        <div className="project-tech-tags">
-                          {project.tech.map((tech) => {
-                            if (typeof tech === 'string') {
-                              return (
-                                <span key={tech + '-' + project.name} className="tech-badge">
-                                  {tech}
-                                </span>
-                              );
-                            } else if (tech && typeof tech === 'object' && (tech as any).name) {
-                              return (
-                                <span key={(tech as any).name + '-' + project.name} className="tech-badge">
-                                  {(tech as any).name}
-                                </span>
-                              );
-                            }
-                            return null;
-                          })}
-                        </div>
-                      </div>
-
-                      {/* 액션 버튼 */}
-                      <div className="project-actions">
-                        <button 
-                          onClick={() => setSelectedProject(project)}
-                          className="btn btn-primary"
-                        >
-                          <span>▶️</span>
-                          상세 보기
-                        </button>
-                        <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-secondary">
-                          <span>🔗</span>
-                          라이브 데모
-                        </a>
-                      </div>
+                    <div className="exp-company">
+                      <span className="comment">// @company: {exp.company}</span>
                     </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            {/* Experience 섹션 */}
-            <section id="experience" className="blog-section">
-              <h2>💼 Experience</h2>
-              <div className="experience-timeline">
-                {experience.map((exp) => (
-                  <div key={exp.company} className="timeline-item">
-                    <div className="timeline-marker"></div>
-                    <div className="timeline-content">
-                      <h3 className="exp-title">{exp.role}</h3>
-                      <p className="exp-company">{exp.company}</p>
-                      <p className="exp-period">{exp.period}</p>
-                      <ul className="exp-details">
-                        {exp.details.map((detail) => (
-                          <li key={detail}>{detail}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Skills 섹션 */}
-            <section id="skills" className="blog-section">
-              <h2>🛠️ Tech Stack</h2>
-              <div className="tech-tabs">
-                <button
-                  className={`tech-tab${activeTab === 'frontend' ? ' active' : ''}`}
-                  onClick={() => setActiveTab('frontend')}
-                >
-                  <span className="tab-icon" role="img" aria-label="frontend">💻</span>
-                  Frontend
-                </button>
-                <button
-                  className={`tech-tab${activeTab === 'backend' ? ' active' : ''}`}
-                  onClick={() => setActiveTab('backend')}
-                >
-                  <span className="tab-icon" role="img" aria-label="backend">⚙️</span>
-                  Backend
-                </button>
-                <button
-                  className={`tech-tab${activeTab === 'ai' ? ' active' : ''}`}
-                  onClick={() => setActiveTab('ai')}
-                >
-                  <span className="tab-icon" role="img" aria-label="ai">🤖</span>
-                  AI & Tools
-                </button>
-              </div>
-              <div className="skills-grid">
-                {activeTab === 'frontend' && (
-                  <div className="skill-items">
-                    {frontendSkills.map((skill, idx) =>
-                      skill ? (
-                        <span key={skill.name + '-' + idx} className="skill-item">
-                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                          {skill.name}
-                        </span>
-                      ) : null
-                    )}
-                  </div>
-                )}
-                {activeTab === 'backend' && (
-                  <div className="skill-items">
-                    {backendSkills.map((skill, idx) =>
-                      skill ? (
-                        <span key={skill.name + '-' + idx} className="skill-item">
-                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                          {skill.name}
-                        </span>
-                      ) : null
-                    )}
-                  </div>
-                )}
-                {activeTab === 'ai' && (
-                  <div className="skill-items">
-                    {aiSkills.length > 0 ? aiSkills.map((skill, idx) =>
-                      skill ? (
-                        <span key={skill.name + '-' + idx} className="skill-item">
-                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                          {skill.name}
-                        </span>
-                      ) : null
-                    ) : <span style={{color:'#888'}}>AI 및 툴 관련 기술 정보가 없습니다.</span>}
-                  </div>
-                )}
-              </div>
-            </section>
-
-            {/* Contact 섹션 */}
-            <section id="contact" className="blog-section contact-section">
-              <h2>💬 Get In Touch</h2>
-              <article className="blog-post">
-                <p className="contact-intro">새로운 기회나 협업에 대해 이야기하고 싶으신가요? 언제든지 연락해주세요!</p>
-                <div className="contact-links">
-                  <a href={`mailto:${contact.email}`} className="contact-btn email">
-                    <span>✉️</span>
-                    <span>Email</span>
-                  </a>
-                  <a href={contact.github} target="_blank" rel="noreferrer" className="contact-btn github">
-                    <span>🐙</span>
-                    <span>GitHub</span>
-                  </a>
-                  <a href={contact.linkedIn} target="_blank" rel="noreferrer" className="contact-btn linkedin">
-                    <span>💼</span>
-                    <span>LinkedIn</span>
-                  </a>
-                  <a href={contact.resume} target="_blank" rel="noreferrer" className="contact-btn resume">
-                    <span>📄</span>
-                    <span>Resume</span>
-                  </a>
-                </div>
-              </article>
-            </section>
-          </main>
-        </div>
-
-        {/* 푸터 */}
-        <footer className="blog-footer">
-          <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-        </footer>
-
-        {/* 상세 보기 모달 */}
-        {selectedProject && (
-          <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={() => setSelectedProject(null)}>✕</button>
-              
-              <div className="modal-header">
-                <div className="modal-icon">
-                  {selectedProject.icon ? (
-                    <img src={selectedProject.icon} alt={selectedProject.name} />
-                  ) : (
-                    <span>📦</span>
-                  )}
-                </div>
-                <div className="modal-title-section">
-                  <h2>{selectedProject.name}</h2>
-                  <p className="modal-period">{selectedProject.period}</p>
-                </div>
-              </div>
-
-              <div className="modal-body">
-                {/* 설명 */}
-                <section className="modal-section modal-section-split">
-                  <div className="modal-description-left">
-                    <h3>📖 프로젝트 설명</h3>
-                    <p>{selectedProject.summary.split('\n\n')[0]}</p>
-                  </div>
-                  {selectedProject.summary.includes('|') && (
-                    <div className="modal-test-accounts">
-                      <h3>🔐 테스트 계정</h3>
-                      <div className="test-account-list">
-                        {selectedProject.summary.split('\n').slice(2).map((line, idx) => {
-                          const [role, credentials] = line.split(' - ');
-                          const [email, password] = credentials.split(' | ');
-                          return (
-                            <div key={idx} className="test-account-item">
-                              <div className="account-role">{role}</div>
-                              <div className="account-email">{email}</div>
-                              <div className="account-password">
-                                <span className="pwd-label">비밀번호:</span>
-                                <span className="pwd-value">{password}</span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </section>
-
-                {/* 주요 기능 */}
-                {(selectedProject as any).features && (selectedProject as any).features.length > 0 && (
-                  <section className="modal-section">
-                    <h3>✨ 주요 기능</h3>
-                    <ul className="feature-list">
-                      {(selectedProject as any).features.map((feature: string, idx: number) => (
-                        <li key={idx}>{feature}</li>
+                    <ul className="exp-details">
+                      {exp.details.map((detail, idx) => (
+                        <li key={idx}>
+                          <span className="bullet">→</span>
+                          {detail}
+                        </li>
                       ))}
                     </ul>
-                  </section>
-                )}
-
-                {/* 영향도 */}
-                <section className="modal-section">
-                  <h3>💫 프로젝트 영향도</h3>
-                  <p className="impact-highlight">{selectedProject.impact}</p>
-                </section>
-
-                {/* 기술 스택 */}
-                <section className="modal-section">
-                  <h3>🛠️ 기술 스택</h3>
-                  <div className="modal-tech-tags">
-                    {selectedProject.tech.map((tech, idx) => {
-                      const techName = typeof tech === 'string' ? tech : (tech as any)?.name || '';
-                      return (
-                        <span key={idx} className="modal-tech-badge">
-                          {techName}
-                        </span>
-                      );
-                    })}
+                    <div className="exp-close">{'}'}</div>
                   </div>
-                </section>
+                </div>
+              ))}
+            </div>
+          </section>
 
-                {/* 액션 */}
-                <div className="modal-actions">
-                  <a 
-                    href={selectedProject.link} 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="btn btn-primary"
-                  >
-                    <span>🔗</span>
-                    라이브 데모 방문
-                  </a>
-                  <button 
-                    onClick={() => setSelectedProject(null)}
-                    className="btn btn-secondary"
-                  >
-                    <span>✕</span>
-                    닫기
-                  </button>
+          {/* Contact Section */}
+          <section id="contact" className="section">
+            <div className="section-header">
+              <span className="line-number">05</span>
+              <h2>
+                <span className="comment">{'// '}</span>
+                Contact
+              </h2>
+            </div>
+            
+            <div className="contact-terminal">
+              <div className="terminal-header">
+                <div className="terminal-buttons">
+                  <span className="btn-red"></span>
+                  <span className="btn-yellow"></span>
+                  <span className="btn-green"></span>
+                </div>
+                <span className="terminal-title">contact.sh</span>
+              </div>
+              <div className="terminal-body">
+                <div className="terminal-line">
+                  <span className="prompt">$</span>
+                  <span className="command">./send_message.sh</span>
+                </div>
+                <div className="terminal-line output">
+                  <span>새로운 기회나 협업에 대해 이야기하고 싶으신가요?</span>
+                </div>
+                <div className="terminal-line output">
+                  <span>언제든지 연락해주세요!</span>
+                </div>
+                <div className="terminal-line">
+                  <span className="prompt">$</span>
+                  <span className="command">cat contact_info.json</span>
                 </div>
               </div>
             </div>
+
+            <div className="contact-links">
+              <a href={`mailto:${contact.email}`} className="contact-card">
+                <div className="contact-icon">📧</div>
+                <div className="contact-info">
+                  <span className="contact-label">Email</span>
+                  <span className="contact-value">{contact.email}</span>
+                </div>
+              </a>
+              <a href={contact.github} target="_blank" rel="noreferrer" className="contact-card">
+                <div className="contact-icon">🐙</div>
+                <div className="contact-info">
+                  <span className="contact-label">GitHub</span>
+                  <span className="contact-value">@binss-0124</span>
+                </div>
+              </a>
+              <a href={contact.linkedIn} target="_blank" rel="noreferrer" className="contact-card">
+                <div className="contact-icon">💼</div>
+                <div className="contact-info">
+                  <span className="contact-label">LinkedIn</span>
+                  <span className="contact-value">kimfolio</span>
+                </div>
+              </a>
+              <a href={contact.resume} target="_blank" rel="noreferrer" className="contact-card">
+                <div className="contact-icon">📄</div>
+                <div className="contact-info">
+                  <span className="contact-label">Resume</span>
+                  <span className="contact-value">Download CV</span>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="footer">
+            <div className="footer-content">
+              <span className="footer-text">
+                <span className="comment">{'/* '}</span>
+                © {new Date().getFullYear()} {profile.name}. Built with React + TypeScript
+                <span className="comment">{' */'}</span>
+              </span>
+            </div>
+          </footer>
+        </div>
+      </main>
+
+      {/* Project Modal */}
+      {selectedProject && (
+        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="modal-window" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="terminal-buttons">
+                <span className="btn-red" onClick={() => setSelectedProject(null)}></span>
+                <span className="btn-yellow"></span>
+                <span className="btn-green"></span>
+              </div>
+              <span className="modal-title">{selectedProject.name}.md</span>
+            </div>
+            <div className="modal-body">
+              <div className="modal-section">
+                <h3># {selectedProject.name}</h3>
+                <p className="modal-period">📅 {selectedProject.period}</p>
+              </div>
+
+              <div className="modal-section">
+                <h4>## 설명</h4>
+                <p>{selectedProject.summary.split('\n\n')[0]}</p>
+              </div>
+
+              {selectedProject.summary.includes('|') && (
+                <div className="modal-section test-accounts">
+                  <h4>## 테스트 계정</h4>
+                  <div className="accounts-grid">
+                    {selectedProject.summary.split('\n').slice(2).map((line, idx) => {
+                      const [role, credentials] = line.split(' - ');
+                      const [email, password] = credentials?.split(' | ') || ['', ''];
+                      return (
+                        <div key={idx} className="account-item">
+                          <span className="account-role">{role}</span>
+                          <code>{email}</code>
+                          <code className="password">{password}</code>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {(selectedProject as any).features && (
+                <div className="modal-section">
+                  <h4>## 주요 기능</h4>
+                  <ul className="features-list">
+                    {(selectedProject as any).features.map((feature: string, idx: number) => (
+                      <li key={idx}>
+                        <span className="feature-bullet">▸</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="modal-section">
+                <h4>## 영향도</h4>
+                <div className="impact-box">
+                  <span className="impact-icon">📊</span>
+                  {selectedProject.impact}
+                </div>
+              </div>
+
+              <div className="modal-section">
+                <h4>## 기술 스택</h4>
+                <div className="tech-tags">
+                  {selectedProject.tech.map((tech, idx) => (
+                    <span key={idx} className="tech-tag">
+                      {typeof tech === 'string' ? tech : (tech as any)?.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="modal-actions">
+                <a 
+                  href={selectedProject.link} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="modal-btn primary"
+                >
+                  🔗 라이브 데모
+                </a>
+                <button 
+                  className="modal-btn secondary"
+                  onClick={() => setSelectedProject(null)}
+                >
+                  ✕ 닫기
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   )
 }
 
