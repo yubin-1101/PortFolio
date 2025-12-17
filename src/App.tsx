@@ -6,6 +6,8 @@ function App() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [terminalLines, setTerminalLines] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(true);
+  const [typewriterText, setTypewriterText] = useState('');
+  const [isTypewriterComplete, setIsTypewriterComplete] = useState(false);
 
   // 터미널 타이핑 효과
   useEffect(() => {
@@ -29,6 +31,24 @@ function App() {
     }, 400);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // 타이핑 효과
+  useEffect(() => {
+    const targetText = profile.role;
+    let currentIndex = 0;
+    
+    const typeInterval = setInterval(() => {
+      if (currentIndex <= targetText.length) {
+        setTypewriterText(targetText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTypewriterComplete(true);
+        clearInterval(typeInterval);
+      }
+    }, 100);
+
+    return () => clearInterval(typeInterval);
   }, []);
 
   // 스크롤 감지로 활성 섹션 업데이트
@@ -196,65 +216,138 @@ function App() {
         <div className="content-area">
           {/* Hero Section */}
           <section id="home" className="section hero-section">
-            <div className="terminal-window">
-              <div className="terminal-header">
-                <div className="terminal-buttons">
-                  <span className="btn-red"></span>
-                  <span className="btn-yellow"></span>
-                  <span className="btn-green"></span>
-                </div>
-                <span className="terminal-title">zsh - portfolio</span>
-              </div>
-              <div className="terminal-body">
-                {terminalLines.map((line, idx) => (
-                  <div key={idx} className="terminal-line">
-                    <span className={line && typeof line === 'string' && line.startsWith('>') ? 'command' : 'output'}>{line || ''}</span>
+            <div className="hero-main">
+              <div className="hero-left">
+                <div className="terminal-window">
+                  <div className="terminal-header">
+                    <div className="terminal-buttons">
+                      <span className="btn-red"></span>
+                      <span className="btn-yellow"></span>
+                      <span className="btn-green"></span>
+                    </div>
+                    <span className="terminal-title">zsh - portfolio</span>
                   </div>
-                ))}
-                {isTyping && <span className="cursor">▋</span>}
-              </div>
-            </div>
+                  <div className="terminal-body">
+                    {terminalLines.map((line, idx) => (
+                      <div key={idx} className="terminal-line">
+                        <span className={line && typeof line === 'string' && line.startsWith('>') ? 'command' : 'output'}>{line || ''}</span>
+                      </div>
+                    ))}
+                    {isTyping && <span className="cursor">▋</span>}
+                  </div>
+                </div>
 
-            <div className="hero-content">
-              <div className="hero-avatar">
-                <img 
-                  src={profile.image || '/placeholder-profile.jpg'} 
-                  alt={profile.name}
-                  onError={(e) => {
-                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzFhMWIyNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM3YWE2ZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5EZXY8L3RleHQ+PC9zdmc+';
-                  }}
-                />
-                <div className="status-badge">
-                  <span className="status-dot"></span>
-                  Available
+                <div className="hero-content">
+                  <div className="hero-avatar">
+                    <img 
+                      src={profile.image || '/placeholder-profile.jpg'} 
+                      alt={profile.name}
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzFhMWIyNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM3YWE2ZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5EZXY8L3RleHQ+PC9zdmc+';
+                      }}
+                    />
+                    <div className="status-badge">
+                      <span className="status-dot"></span>
+                      Available
+                    </div>
+                  </div>
+                  <div className="hero-info">
+                    <h1 className="glitch" data-text={profile.name}>{profile.name}</h1>
+                    <p className="role">
+                      <span className="keyword">const</span> role = <span className="string">"{typewriterText}"</span>
+                      {!isTypewriterComplete && <span className="typing-cursor">|</span>};
+                    </p>
+                    <p className="tagline">{profile.tagline}</p>
+                    <div className="hero-meta">
+                      <span className="meta-item">
+                        <span className="meta-icon">📍</span>
+                        {profile.location}
+                      </span>
+                      <span className="meta-item">
+                        <span className="meta-icon">🕐</span>
+                        {profile.availability}
+                      </span>
+                    </div>
+                    <div className="hero-actions">
+                      <button className="btn-primary" onClick={() => scrollToSection('projects')}>
+                        <span className="btn-icon">{'{'}</span>
+                        View Projects
+                        <span className="btn-icon">{'}'}</span>
+                      </button>
+                      <a href={`mailto:${contact.email}`} className="btn-secondary">
+                        <span className="btn-icon">$</span>
+                        Contact Me
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="hero-info">
-                <h1 className="glitch" data-text={profile.name}>{profile.name}</h1>
-                <p className="role">
-                  <span className="keyword">const</span> role = <span className="string">"{profile.role}"</span>;
-                </p>
-                <p className="tagline">{profile.tagline}</p>
-                <div className="hero-meta">
-                  <span className="meta-item">
-                    <span className="meta-icon">📍</span>
-                    {profile.location}
-                  </span>
-                  <span className="meta-item">
-                    <span className="meta-icon">🕐</span>
-                    {profile.availability}
-                  </span>
-                </div>
-                <div className="hero-actions">
-                  <button className="btn-primary" onClick={() => scrollToSection('projects')}>
-                    <span className="btn-icon">{'{'}</span>
-                    View Projects
-                    <span className="btn-icon">{'}'}</span>
-                  </button>
-                  <a href={`mailto:${contact.email}`} className="btn-secondary">
-                    <span className="btn-icon">$</span>
-                    Contact Me
-                  </a>
+
+              {/* 우측 명함 카드 - 현재 관심사 */}
+              <div className="hero-right">
+                <div className="business-card">
+                  <div className="card-glow"></div>
+                  <div className="card-content">
+                    <div className="card-header">
+                      <div className="card-logo">
+                        <span className="logo-bracket">{'<'}</span>
+                        <span className="logo-text">DEV</span>
+                        <span className="logo-bracket">{'/>'}</span>
+                      </div>
+                      <div className="card-qr">
+                        <div className="qr-pattern">
+                          {Array.from({ length: 25 }, (_, i) => (
+                            <div key={i} className={`qr-cell ${Math.random() > 0.4 ? 'filled' : ''}`}></div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="card-section-title">
+                      <span className="section-icon">🎯</span>
+                      Current Focus
+                    </div>
+                    <div className="card-focus-list">
+                      <div className="focus-item">
+                        <span className="focus-bullet">▸</span>
+                        <span className="focus-text">Backend Architecture</span>
+                      </div>
+                      <div className="focus-item">
+                        <span className="focus-bullet">▸</span>
+                        <span className="focus-text">System Design</span>
+                      </div>
+                      <div className="focus-item">
+                        <span className="focus-bullet">▸</span>
+                        <span className="focus-text">Cloud Infrastructure</span>
+                      </div>
+                    </div>
+
+                    <div className="card-divider"></div>
+
+                    <div className="card-learning">
+                      <div className="learning-row">
+                        <span className="learning-icon">🔥</span>
+                        <span className="learning-label">Learning</span>
+                        <span className="learning-value">Kubernetes</span>
+                      </div>
+                      <div className="learning-row">
+                        <span className="learning-icon">📖</span>
+                        <span className="learning-label">Reading</span>
+                        <span className="learning-value">Clean Architecture</span>
+                      </div>
+                      <div className="learning-row">
+                        <span className="learning-icon">🛠️</span>
+                        <span className="learning-label">Building</span>
+                        <span className="learning-value">Portfolio Site</span>
+                      </div>
+                    </div>
+
+                    <div className="card-divider"></div>
+
+                    <div className="card-footer">
+                      <span className="card-motto">"꾸준히 성장하는 개발자"</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

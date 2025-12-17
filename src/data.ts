@@ -153,9 +153,9 @@ export const experience = [
 ]
 
 export const contact = {
-  email: 'hello@kimfolio.dev',
+  email: 'binss0124@gmail.com',
   github: 'https://github.com/binss-0124',
-  linkedIn: 'https://linkedin.com/in/kimfolio',
+  linkedIn: '010-8321-3387',
   resume: 'https://drive.google.com/kimfolio-resume',
 }
 
