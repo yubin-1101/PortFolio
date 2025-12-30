@@ -116,7 +116,7 @@ export const projects = [
     thumbnail: '',
   },
   {
-    name: 'Wanderlog',
+    name: '감정 일기',
     period: '2023.07 - 2023.09',
     summary:
       '여행 일정을 자동으로 추천해 주는 마이크로 SaaS. OpenAI + Google Places API를 통합하고, AI 프롬프트 결과를 시각적으로 구조화했습니다.',
@@ -128,7 +128,7 @@ export const projects = [
     ],
     impact: '런칭 3개월 만에 1,200명 유료 전환',
     tech: ['Next.js', 'OpenAI API', 'PlanetScale'],
-    link: 'https://wanderlog.example.com',
+    link: 'https://feelingdiary.netlify.app/write',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
     thumbnail: '',

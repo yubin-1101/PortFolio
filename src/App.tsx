@@ -1,6 +1,72 @@
-import { contact, experience, profile, projects, skills } from './data'
+import { contact, profile, projects, skills } from './data'
 import { useState, useEffect } from 'react';
+function SkillsSection() {
+  const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'tools'>('frontend');
 
+  return (
+    <div className="skills-tabbed">
+      <div className="skills-tabs">
+        <button 
+          className={`skill-tab ${activeTab === 'frontend' ? 'active' : ''}`}
+          onClick={() => setActiveTab('frontend')}
+        >
+          <span className="tab-icon">💻</span> Frontend
+        </button>
+        <button 
+          className={`skill-tab ${activeTab === 'backend' ? 'active' : ''}`}
+          onClick={() => setActiveTab('backend')}
+        >
+          <span className="tab-icon">⚙️</span> Backend
+        </button>
+        <button 
+          className={`skill-tab ${activeTab === 'tools' ? 'active' : ''}`}
+          onClick={() => setActiveTab('tools')}
+        >
+          <span className="tab-icon">🤖</span> AI & Tools
+        </button>
+      </div>
+      
+      <div className="skills-tab-content">
+        {activeTab === 'frontend' && (
+          <div className="skill-grid">
+            {skills.core.map((skill) => (
+              <div key={skill.name} className="skill-card">
+                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span className="skill-name">{skill.name}</span>
+              </div>
+            ))}
+            {skills.ui.map((skill) => (
+              <div key={skill.name} className="skill-card">
+                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span className="skill-name">{skill.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {activeTab === 'backend' && (
+          <div className="skill-grid">
+            {skills.tooling.filter(s => ['PostgreSQL', 'Redis', 'Docker'].includes(s.name)).map((skill) => (
+              <div key={skill.name} className="skill-card">
+                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span className="skill-name">{skill.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {activeTab === 'tools' && (
+          <div className="skill-grid">
+            {skills.tooling.filter(s => ['AWS', 'GitHub Actions', 'Vercel'].includes(s.name)).map((skill) => (
+              <div key={skill.name} className="skill-card">
+                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span className="skill-name">{skill.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
@@ -93,7 +159,7 @@ function App() {
   // 스크롤 감지로 활성 섹션 업데이트
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+      const sections = ['home', 'about', 'projects', 'skills', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -159,15 +225,6 @@ function App() {
           >
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-            </svg>
-          </button>
-          <button 
-            className={`sidebar-icon ${activeSection === 'experience' ? 'active' : ''}`}
-            onClick={() => scrollToSection('experience')}
-            title="Experience"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
             </svg>
           </button>
           <button 
@@ -430,68 +487,10 @@ function App() {
             </div>
           </section>
 
-          {/* Skills Section */}
-          <section id="skills" className="section">
-            <div className="section-header">
-              <span className="line-number">02</span>
-              <h2>
-                <span className="comment">{'// '}</span>
-                Tech Stack
-              </h2>
-            </div>
-            
-            <div className="skills-container">
-              <div className="skill-category">
-                <div className="category-header">
-                  <span className="folder-icon">📂</span>
-                  <span className="category-name">core/</span>
-                </div>
-                <div className="skill-grid">
-                  {skills.core.map((skill) => (
-                    <div key={skill.name} className="skill-card">
-                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                      <span className="skill-name">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="skill-category">
-                <div className="category-header">
-                  <span className="folder-icon">📂</span>
-                  <span className="category-name">ui/</span>
-                </div>
-                <div className="skill-grid">
-                  {skills.ui.map((skill) => (
-                    <div key={skill.name} className="skill-card">
-                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                      <span className="skill-name">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="skill-category">
-                <div className="category-header">
-                  <span className="folder-icon">📂</span>
-                  <span className="category-name">tooling/</span>
-                </div>
-                <div className="skill-grid">
-                  {skills.tooling.map((skill) => (
-                    <div key={skill.name} className="skill-card">
-                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                      <span className="skill-name">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Projects Section */}
           <section id="projects" className="section">
             <div className="section-header">
-              <span className="line-number">03</span>
+              <span className="line-number">02</span>
               <h2>
                 <span className="comment">{'// '}</span>
                 Projects
@@ -590,52 +589,23 @@ function App() {
             </div>
           </section>
 
-          {/* Experience Section */}
-          <section id="experience" className="section">
+          {/* Skills Section */}
+          <section id="skills" className="section">
             <div className="section-header">
-              <span className="line-number">04</span>
+              <span className="line-number">03</span>
               <h2>
                 <span className="comment">{'// '}</span>
-                Experience
+                Tech Stack
               </h2>
             </div>
             
-            <div className="experience-list">
-              {experience.map((exp, index) => (
-                <div key={exp.company} className="experience-item">
-                  <div className="exp-timeline">
-                    <div className="timeline-dot"></div>
-                    {index < experience.length - 1 && <div className="timeline-line"></div>}
-                  </div>
-                  <div className="exp-content">
-                    <div className="exp-header">
-                      <div className="exp-title">
-                        <span className="keyword">export</span> <span className="function">function</span> <span className="func-name">{exp.role.replace(/\s+/g, '')}</span>() {'{'}
-                      </div>
-                      <span className="exp-period">{exp.period}</span>
-                    </div>
-                    <div className="exp-company">
-                      <span className="comment">// @company: {exp.company}</span>
-                    </div>
-                    <ul className="exp-details">
-                      {exp.details.map((detail, idx) => (
-                        <li key={idx}>
-                          <span className="bullet">→</span>
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="exp-close">{'}'}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SkillsSection />
           </section>
 
           {/* Contact Section */}
           <section id="contact" className="section">
             <div className="section-header">
-              <span className="line-number">05</span>
+              <span className="line-number">04</span>
               <h2>
                 <span className="comment">{'// '}</span>
                 Contact
