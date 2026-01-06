@@ -1,5 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './DynamicBackground.css';
+
+// 파티클 타입 정의
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  color: string;
+  size: number;
+  opacity: number;
+}
 
 const NUM_PARTICLES = 18;
 const PARTICLE_SIZE = 32;
@@ -10,11 +21,11 @@ const PARTICLE_COLORS = [
 ];
 
 const DynamicBackground = () => {
-  const [particles, setParticles] = useState([]);
-  const svgRef = useRef(null);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   // 파스텔톤 원 위치 및 속도 생성
-  const generateParticle = () => {
+  const generateParticle = (): Particle => {
     const angle = Math.random() * 2 * Math.PI;
     const speed = 0.15 + Math.random() * 0.25;
     return {
@@ -38,7 +49,7 @@ const DynamicBackground = () => {
   }, []);
 
   useEffect(() => {
-    let animationFrame;
+    let animationFrame: number;
     const animate = () => {
       setParticles(prev => prev.map(p => {
         let newX = p.x + p.vx;
