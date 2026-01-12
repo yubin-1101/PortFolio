@@ -75,7 +75,7 @@ export const projects = [
     impact: '데이터 로딩 속도 38% 개선 · 구독 전환율 12% 향상',
     tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
     link: 'https://conviproject.netlify.app/customer',
-    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
     thumbnail: '',
   },
@@ -93,7 +93,7 @@ export const projects = [
     impact: '주간 활성 사용자 2.1배 증가',
     tech: ['Next.js', 'Framer Motion', 'Edge Functions', 'Upstash Redis'],
     link: 'https://studio.example.com',
-    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    icon: '/alba.png',
     video: '', // 시연 영상 URL
     thumbnail: '',
   },
@@ -111,7 +111,7 @@ export const projects = [
     impact: '동시 접속 5,000명에서도 안정적인 재생 유지',
     tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
     link: 'https://asuragame.netlify.app/',
-    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    icon: '/asura.png',
     video: '/Asura.mp4', // 시연 영상 URL
     thumbnail: '',
   },
@@ -128,8 +128,8 @@ export const projects = [
     ],
     impact: '런칭 3개월 만에 1,200명 유료 전환',
     tech: ['Next.js', 'OpenAI API', 'PlanetScale'],
-    link: 'https://feelingdiary.netlify.app/write',
-    icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
+    link: 'https://feelingdiary.netlify.app/',
+    icon: '/diary.png',
     video: '', // 시연 영상 URL
     thumbnail: '',
   },

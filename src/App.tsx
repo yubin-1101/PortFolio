@@ -188,54 +188,28 @@ function App() {
 
   return (
     <div className="dev-portfolio">
-      {/* 사이드바 - VS Code 스타일 */}
+      {/* 사이드바 - 프로젝트 아이콘 */}
       <aside className="sidebar">
         <div className="sidebar-icons">
-          <button 
-            className={`sidebar-icon ${activeSection === 'home' ? 'active' : ''}`}
-            onClick={() => scrollToSection('home')}
-            title="Home"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            </svg>
-          </button>
-          <button 
-            className={`sidebar-icon ${activeSection === 'about' ? 'active' : ''}`}
-            onClick={() => scrollToSection('about')}
-            title="About"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-          </button>
-          <button 
-            className={`sidebar-icon ${activeSection === 'skills' ? 'active' : ''}`}
-            onClick={() => scrollToSection('skills')}
-            title="Skills"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-            </svg>
-          </button>
-          <button 
-            className={`sidebar-icon ${activeSection === 'projects' ? 'active' : ''}`}
-            onClick={() => scrollToSection('projects')}
-            title="Projects"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-            </svg>
-          </button>
-          <button 
-            className={`sidebar-icon ${activeSection === 'contact' ? 'active' : ''}`}
-            onClick={() => scrollToSection('contact')}
-            title="Contact"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-            </svg>
-          </button>
+          {projects.map((project, index) => (
+            <button 
+              key={index}
+              className={`sidebar-icon ${selectedProject?.name === project.name ? 'active' : ''}`}
+              onClick={() => {
+                setSelectedProject(project);
+                scrollToSection('projects');
+              }}
+              title={project.name}
+            >
+              {project.icon ? (
+                <img src={project.icon} alt={project.name} className="project-icon-img" />
+              ) : (
+                <div className="project-icon-placeholder">
+                  <span className="project-number">{index + 1}</span>
+                </div>
+              )}
+            </button>
+          ))}
         </div>
         <div className="sidebar-bottom">
           <a href={contact.github} target="_blank" rel="noreferrer" className="sidebar-icon" title="GitHub">
@@ -266,13 +240,6 @@ function App() {
               about.md
             </button>
             <button 
-              className={`tab ${activeSection === 'skills' ? 'active' : ''}`}
-              onClick={() => scrollToSection('skills')}
-            >
-              <span className="tab-icon">⚡</span>
-              skills.json
-            </button>
-            <button 
               className={`tab ${activeSection === 'projects' ? 'active' : ''}`}
               onClick={() => scrollToSection('projects')}
             >
@@ -280,11 +247,11 @@ function App() {
               projects/
             </button>
             <button 
-              className={`tab ${activeSection === 'experience' ? 'active' : ''}`}
-              onClick={() => scrollToSection('experience')}
+              className={`tab ${activeSection === 'skills' ? 'active' : ''}`}
+              onClick={() => scrollToSection('skills')}
             >
-              <span className="tab-icon">💼</span>
-              experience.log
+              <span className="tab-icon">⚡</span>
+              skills.json
             </button>
             <button 
               className={`tab ${activeSection === 'contact' ? 'active' : ''}`}
@@ -502,17 +469,20 @@ function App() {
                 <article key={project.name} className="project-card">
                   <div className="project-header">
                     <div className="project-index">
-                      <span className="bracket">[</span>
-                      <span className="index">{index}</span>
-                      <span className="bracket">]</span>
+                      {project.icon ? (
+                        <img src={project.icon} alt={project.name} className="project-index-icon" />
+                      ) : (
+                        <>
+                          <span className="bracket">[</span>
+                          <span className="index">{index}</span>
+                          <span className="bracket">]</span>
+                        </>
+                      )}
                     </div>
                     <div className="project-title-area">
                       <h3>{project.name}</h3>
                       <span className="project-period">{project.period}</span>
                     </div>
-                    {project.icon && (
-                      <img src={project.icon} alt={project.name} className="project-icon" />
-                    )}
                   </div>
 
                   <div className="project-video-wrapper">

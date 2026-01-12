@@ -122,6 +122,49 @@ body {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
+.sidebar-icon .project-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.sidebar-icon .project-icon-placeholder {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--bg-primary);
+  transition: all 0.3s ease;
+}
+
+.sidebar-icon:hover .project-icon-img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 12px rgba(122, 162, 247, 0.4));
+}
+
+.sidebar-icon:hover .project-icon-placeholder {
+  transform: scale(1.15);
+  box-shadow: 0 4px 15px rgba(122, 162, 247, 0.5);
+}
+
+.sidebar-icon.active .project-icon-img {
+  filter: drop-shadow(0 0 12px var(--accent-blue));
+  transform: scale(1.1);
+}
+
+.sidebar-icon.active .project-icon-placeholder {
+  box-shadow: 0 0 20px var(--accent-blue);
+  transform: scale(1.1);
+}
+
 .sidebar-icon:hover {
   color: var(--text-primary);
   background: rgba(122, 162, 247, 0.08);
@@ -1369,10 +1412,31 @@ body {
 .project-index {
   font-family: var(--font-mono);
   font-size: 14px;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .project-index .bracket { color: var(--text-muted); }
 .project-index .index { color: var(--accent-orange); }
+
+.project-index-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 12px;
+  padding: 8px;
+  background: linear-gradient(135deg, rgba(122, 162, 247, 0.1), rgba(125, 207, 255, 0.05));
+  border: 1px solid rgba(122, 162, 247, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-index-icon {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(122, 162, 247, 0.3);
+}
 
 .project-title-area {
   flex: 1;
@@ -1389,12 +1453,6 @@ body {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text-muted);
-}
-
-.project-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
 }
 
 .project-video-wrapper {
