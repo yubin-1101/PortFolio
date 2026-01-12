@@ -76,7 +76,7 @@ export const projects = [
     tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
     link: 'https://conviproject.netlify.app/customer',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
-    video: '', // 시연 영상 URL
+    video: '/Cvs.mov', // 시연 영상 URL
     thumbnail: '',
   },
   {
@@ -112,7 +112,7 @@ export const projects = [
     tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
     link: 'https://asuragame.netlify.app/',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
-    video: '', // 시연 영상 URL
+    video: '/Asura.mp4', // 시연 영상 URL
     thumbnail: '',
   },
   {
