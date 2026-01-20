@@ -1088,6 +1088,23 @@ body {
   user-select: none;
 }
 
+/* About list number (content numbers like '1.', '2.') */
+.about-list-num {
+  display: inline-block;
+  width: 28px; /* fixed slot so following text aligns */
+  text-align: right; /* align numbers/dots to the right edge */
+  margin-right: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.about-text {
+  display: block;
+  flex: 1;
+  color: var(--text-secondary);
+}
+
 .keyword { color: var(--accent-magenta); }
 .class-name { color: var(--accent-yellow); }
 .property { color: var(--accent-blue); }
@@ -1151,6 +1168,42 @@ body {
   line-height: 1.8;
   margin: 0;
   font-size: 15px;
+}
+
+/* Emphasized about text inside code-like block */
+.about-text {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.6;
+  position: relative;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: transparent;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-text::before {
+  /* subtle block behind gradient text for better contrast */
+  content: '';
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 54%;
+  background: rgba(122,162,247,0.06);
+  border-radius: 8px;
+  z-index: -1;
+}
+
+@media (max-width: 600px) {
+  .about-text { font-size: 14px; padding: 3px 6px; }
+  .about-text::before { height: 60%; }
 }
 
 /* About Tags */

@@ -404,7 +404,7 @@ function App() {
                       <div className="learning-row">
                         <span className="learning-icon">🔥</span>
                         <span className="learning-label">Learning</span>
-                        <span className="learning-value">Kubernetes</span>
+                        <span className="learning-value">Spring</span>
                       </div>
                       <div className="learning-row">
                         <span className="learning-icon">📖</span>
@@ -446,12 +446,18 @@ function App() {
                   <div className="code-line"><span className="line-num">4</span><span className="property">  style</span> = [<span className="string">"Vibe Coding"</span>];</div>
                   <div className="code-line"><span className="line-num">5</span></div>
                   <div className="code-line"><span className="line-num">6</span><span className="keyword">  description</span>() {'{'}</div>
-                  {profile.about.map((paragraph, idx) => (
-                    <div className="code-line" key={idx}>
-                      <span className="line-num">{7 + idx}</span>
-                      <span className="comment">// {paragraph}</span>
-                    </div>
-                  ))}
+                  {profile.about.map((paragraph, idx) => {
+                    const m = paragraph.match(/^(\s*\d+\.)\s*(.*)$/);
+                    const label = m ? m[1] : '';
+                    const text = m ? m[2] : paragraph;
+                    return (
+                      <div className="code-line" key={idx}>
+                        <span className="line-num">{7 + idx}</span>
+                        <span className="about-list-num">{label}</span>
+                        <span className="about-text">{text}</span>
+                      </div>
+                    );
+                  })}
                   <div className="code-line"><span className="line-num">{7 + profile.about.length}</span>{'}'}</div>
                   <div className="code-line"><span className="line-num">{8 + profile.about.length}</span>{'}'}</div>
                 </div>

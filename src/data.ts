@@ -10,9 +10,9 @@ export const profile = {
   image: '/profile.png', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
   intro: '안녕하세요! AI와 함께 아이디어를 빠르게 현실로 만드는 풀스택 개발자 조유빈입니다. Vibe Coding으로 프론트엔드부터 백엔드, 배포까지 전 과정을 혼자서도 완성합니다. 견고한 시스템 설계와 효율적인 AI 활용으로, 팀 단위의 생산성을 1인 개발로 실현합니다.',
   about: [
-    'React와 Supabase를 중심으로 한 풀스택 개발자로서, 아이디어를 빠르게 실현하는 데 집중합니다.',
-    'Synapse AI, 독독 독서 플랫폼, AI 감정 상담 서비스, 센서 게임 플랫폼, 편의점 종합 솔루션 등 다양한 프로젝트를 통해 실제 사용자에게 가치를 전달하는 서비스를 구현해왔습니다.',
-    'Claude Code, Cursor 등 Vibe Coding 도구를 적극 활용하여 빠른 프로토타이핑과 아이디어 검증을 실천하며, 단순 코딩이 아닌 창의적 문제 해결 중심의 개발을 추구합니다.',
+    '1. React와 Supabase를 중심으로 한 풀스택 개발자로서, 아이디어를 빠르게 실현하는 데 집중합니다.',
+    '2. MetaPlaza(3D 커뮤니티), CVS(편의점 관리 시스템), 근로자 근무 관리 앱, Asura Arena(3D 멀티플레이 프로토타입), AI 기반 감정 일기 등 웹·게임·B2B2C 서비스 전반의 기획·개발·운영을 통해 실제 사용자에게 가치를 전달해왔습니다.',
+    '3. Claude Code, Cursor 등 Vibe Coding 도구를 적극 활용하여 빠른 프로토타이핑과 아이디어 검증을 실천하며, 단순 코딩이 아닌 창의적 문제 해결 중심의 개발을 추구합니다.',
   ],
 }
 
@@ -47,7 +47,7 @@ export const projects = [
     name: '3D Community',
     period: '2025.02 - 진행 중',
     summary:
-      'MetaPlaza는 React, Three.js, Spring Boot 기반의 3D 소셜 커뮤니티 플랫폼입니다. 가상 공간에서 실시간 소통, 3D 캐릭터, 게시판, 친구 시스템 등 다양한 기능을 제공합니다.',
+      'MetaPlaza는 React, Spring Boot 기반의 3D 소셜 커뮤니티 플랫폼입니다. 가상 공간에서 실시간 소통, 3D 캐릭터, 게시판, 친구 시스템 등 다양한 기능을 제공합니다.',
     features: [
       '실시간 3D 가상광장3D 가상광장: 실시간 렌더링, 자유 이동, 캐릭터 애니메이션',
       '회원 시스템: JWT 인증, 회원가입/로그인, 권한 분리.IO 기반 낮은 지연시간 동기화',
@@ -56,7 +56,7 @@ export const projects = [
       '지도 연동: Mapbox 기반 위치 정보 제공 및 개인 방 꾸미기 기능'
     ],
     impact: '커뮤니티 활성화 및 실시간 상호작용 경험 제공',
-    tech: ['React','Three.js', 'WebSocket', 'Express', 'PostgreSQL','Spring Boot'],
+    tech: ['React(Vite)','Three.js', 'WebSocket', 'Express', 'PostgreSQL','Spring Boot'],
     link: '/kdt-game/index.html',
     icon: '/metaplaza.png',
     video: '', // 시연 영상 URL
@@ -76,7 +76,7 @@ export const projects = [
       '- 보안/무결성: PostgreSQL 트랜잭션 + RLS로 재고 동시성 보장',
     ],
     impact: '상용 수준으로 배포된 B2B2C 플랫폼으로 운영 효율성을 높임',
-    tech: ['React19', 'TypeScript', 'Vite', 'PostgreSQL', 'Supabase','Render','TossPayments'],
+    tech: ['React19(Vite)', 'TypeScript', 'PostgreSQL', 'Supabase','Render','TossPayments'],
     link: 'https://conviproject.netlify.app/customer',
     icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
@@ -94,8 +94,8 @@ export const projects = [
       '근무 스케줄 조회 및 관리 기능',
       '반응형 UI 및 직관적 네비게이션 ',
     ],
-    impact: '출퇴근·스케줄 관리 업무를 자동화하여 운영 비용 및 소요 시간을 절감하고, 사용자(알바생·고용주)의 관리 효율성과 정확성을 향상시킵니다.',
-    tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS / PostCSS', 'Supabase'],
+    impact: '출퇴근·스케줄 관리 업무를 자동화하여 관리 효율성과 정확성을 향상.',
+    tech: ['TypeScript', 'React(Vite)', 'Tailwind CSS / PostCSS', 'Supabase'],
     link: 'https://alabaweb.netlify.app/',
     icon: '/alba.png',
     video: '', // 시연 영상 URL
@@ -105,15 +105,15 @@ export const projects = [
     name: 'Asura Arena',
     period: '2023.11 - 2024.01',
     summary:
-      '웹 브라우저에서 실행되는 3D 액션/멀티플레이 프로토타입으로, Three.js 렌더링과 cannon‑es 물리 통합을 통해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
+      '웹 브라우저에서 실행되는 3D 액션/멀티플레이 게임으로, Socket.io를 활용해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
     features: [
       '플레이어 컨트롤: WASD 이동, Shift 달리기, K 점프, L 구르기 등 입력 및 애니메이션/물리 동기화',
       '피드백: 플레이어 중심 카메라와 화면 오프셋으로 플레이 시야와 경기성(가시성)을 최적화',
       '서버 소켓 연동 지점으로 멀티플레이/대기실/방 관리 통합 가능 — 빠른 온라인 테스트 지원.',
       '라운드 카운트다운·타이머·게임 시작/종료·승자 처리 등 경기 상태 전환을 제어',
     ],
-    impact: 'Three.js와 cannon‑es 기반의 브라우저형 3D 물리 게임 프레임워크',
-    tech: ['Three.js','cannon‑es','Node.js','socket.io'],
+    impact: 'JS, CSS, Socket.io 를 활용한 웹 기반의 브라우저형 3D 물리 게임 프레임워크',
+    tech: ['JavaScript','CSS','Three.js','Cannon‑es','Node.js','Socket.io'],
     link: 'https://asuragame.netlify.app/',
     icon: '/asura.png',
     video: '/Asura.mp4', // 시연 영상 URL
@@ -132,8 +132,7 @@ export const projects = [
     ],
     impact: '사용자의 감정 인식과 자기성찰을 돕고, 감정 변화 추이를 시각적으로 제공하여 정서적 건강 관리에 기여',
     tech: [
-  'React',
-  'Vite',
+  'React(Vite)',
   'Tailwind CSS',
   'Node.js (Express)',
   'Supabase (PostgreSQL, Auth)',
