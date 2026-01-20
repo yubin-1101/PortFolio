@@ -624,11 +624,11 @@ function App() {
                   <span className="contact-value">@binss-0124</span>
                 </div>
               </a>
-              <a href={contact.linkedIn} target="_blank" rel="noreferrer" className="contact-card">
-                <div className="contact-icon">💼</div>
+              <a className="contact-card">
+                <div className="contact-icon">📞</div>
                 <div className="contact-info">
-                  <span className="contact-label">LinkedIn</span>
-                  <span className="contact-value">kimfolio</span>
+                  <span className="contact-label">Phone</span>
+                  <span className="contact-value">010-8321-3387</span>
                 </div>
               </a>
             </div>

@@ -163,6 +163,7 @@ export const experience = [
 export const contact = {
   email: 'binss0124@gmail.com',
   github: 'https://github.com/yubin-1101',
-  linkedIn: '010-8321-3387',
+  phone: '010-8321-3387',
+  message: '취업 준비 중인 학생입니다. 새로운 기회나 조언이 필요하다면 언제든지 연락주세요!',
 };
 
