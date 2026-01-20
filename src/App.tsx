@@ -631,13 +631,6 @@ function App() {
                   <span className="contact-value">kimfolio</span>
                 </div>
               </a>
-              <a href={contact.resume} target="_blank" rel="noreferrer" className="contact-card">
-                <div className="contact-icon">📄</div>
-                <div className="contact-info">
-                  <span className="contact-label">Resume</span>
-                  <span className="contact-value">Download CV</span>
-                </div>
-              </a>
             </div>
           </section>
 
