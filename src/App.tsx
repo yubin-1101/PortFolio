@@ -3,6 +3,25 @@ import { useState, useEffect } from 'react';
 function SkillsSection() {
   const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'tools'>('frontend');
 
+  const frontendList = [
+    { name: 'React (Vite)', icon: '⚛️' },
+    { name: 'TypeScript', icon: '🔷' },
+    { name: 'JavaScript', icon: '🟨' },
+    { name: 'HTML/CSS', icon: '🌐' },
+    { name: 'Tailwind CSS', icon: '🎨' },
+  ];
+  const backendList = [
+    { name: 'Spring', icon: '🌱' },
+    { name: 'Node.js', icon: '🟢' },
+    { name: 'PostgreSQL', icon: '🐘' },
+    { name: 'Supabase', icon: '☁️' },
+  ];
+  const toolsList = [
+    { name: 'GitHub', icon: '🐙' },
+    { name: 'Netlify', icon: '🚀' },
+    { name: 'ClaudeAI', icon: '🤖' },
+  ];
+
   return (
     <div className="skills-tabbed">
       <div className="skills-tabs">
@@ -29,15 +48,9 @@ function SkillsSection() {
       <div className="skills-tab-content">
         {activeTab === 'frontend' && (
           <div className="skill-grid">
-            {skills.core.map((skill) => (
+            {Array.from(new Map(frontendList.map(s => [s.name, s])).values()).map((skill) => (
               <div key={skill.name} className="skill-card">
-                <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                <span className="skill-name">{skill.name}</span>
-              </div>
-            ))}
-            {skills.ui.map((skill) => (
-              <div key={skill.name} className="skill-card">
-                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span role="img" aria-label={skill.name} className="skill-icon">{skill.icon}</span>
                 <span className="skill-name">{skill.name}</span>
               </div>
             ))}
@@ -45,9 +58,9 @@ function SkillsSection() {
         )}
         {activeTab === 'backend' && (
           <div className="skill-grid">
-            {skills.tooling.filter(s => ['PostgreSQL', 'Redis', 'Docker'].includes(s.name)).map((skill) => (
+            {Array.from(new Map(backendList.map(s => [s.name, s])).values()).map((skill) => (
               <div key={skill.name} className="skill-card">
-                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span role="img" aria-label={skill.name} className="skill-icon">{skill.icon}</span>
                 <span className="skill-name">{skill.name}</span>
               </div>
             ))}
@@ -55,9 +68,9 @@ function SkillsSection() {
         )}
         {activeTab === 'tools' && (
           <div className="skill-grid">
-            {skills.tooling.filter(s => ['AWS', 'GitHub Actions', 'Vercel'].includes(s.name)).map((skill) => (
+            {Array.from(new Map(toolsList.map(s => [s.name, s])).values()).map((skill) => (
               <div key={skill.name} className="skill-card">
-                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <span role="img" aria-label={skill.name} className="skill-icon">{skill.icon}</span>
                 <span className="skill-name">{skill.name}</span>
               </div>
             ))}
@@ -429,8 +442,8 @@ function App() {
                 <div className="code-content">
                   <div className="code-line"><span className="line-num">1</span><span className="keyword">class</span> <span className="class-name">AboutMe</span> {'{'}</div>
                   <div className="code-line"><span className="line-num">2</span><span className="property">  stack</span> = [<span className="string">"React"</span>, <span className="string">"Supabase"</span>, <span className="string">"TypeScript"</span>];</div>
-                  <div className="code-line"><span className="line-num">3</span><span className="property">  tools</span> = [<span className="string">"Claude Code"</span>, <span className="string">"Cursor"</span>];</div>
-                  <div className="code-line"><span className="line-num">4</span><span className="property">  style</span> = <span className="string">"Vibe Coding"</span>;</div>
+                  <div className="code-line"><span className="line-num">3</span><span className="property">  tools</span> = [<span className="string">"Claude Code"</span>, <span className="string">"GitHub"</span>];</div>
+                  <div className="code-line"><span className="line-num">4</span><span className="property">  style</span> = [<span className="string">"Vibe Coding"</span>];</div>
                   <div className="code-line"><span className="line-num">5</span></div>
                   <div className="code-line"><span className="line-num">6</span><span className="keyword">  description</span>() {'{'}</div>
                   {profile.about.map((paragraph, idx) => (
