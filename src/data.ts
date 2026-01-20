@@ -47,33 +47,36 @@ export const projects = [
     name: '3D Community',
     period: '2025.02 - 진행 중',
     summary:
-      'KDT(Korea Digital Training)의 일환으로 제작된 3D 온라인 멀티플레이어 격투 게임입니다. Node.js, Socket.IO, Three.js를 기반으로 구현되었으며, 플레이어는 방 생성, 캐릭터 선택, 3D 환경에서의 전투 등 다양한 기능을 즐길 수 있습니다.',
+      'MetaPlaza는 React, Three.js, Spring Boot 기반의 3D 소셜 커뮤니티 플랫폼입니다. 가상 공간에서 실시간 소통, 3D 캐릭터, 게시판, 친구 시스템 등 다양한 기능을 제공합니다.',
     features: [
-      '실시간 멀티플레이어 3D 격투 게임',
-      'Socket.IO 기반 낮은 지연시간 동기화',
-      '캐릭터 커스터마이징 및 스킬 시스템',
-      '파티 매칭 및 방 관리 기능',
+      '실시간 3D 가상광장3D 가상광장: 실시간 렌더링, 자유 이동, 캐릭터 애니메이션',
+      '회원 시스템: JWT 인증, 회원가입/로그인, 권한 분리.IO 기반 낮은 지연시간 동기화',
+      '실시간 채팅: 전체/1:1/친구 채팅, 말풍선 표시 커스터마이징 및 스킬 시스템',
+      '친구 관리: 친구 추가/삭제, 친구 목록, 온라인 상태 표시 매칭 및 방 관리 기능',
+      '지도 연동: Mapbox 기반 위치 정보 제공 및 개인 방 꾸미기 기능'
     ],
-    impact: '내부 테스트에서 평균 RTT 90ms 미만 유지 · 30명 알파 테스터 피드백 반영',
-    tech: ['Three.js', 'Socket.io', 'Express', 'Node.js'],
+    impact: '커뮤니티 활성화 및 실시간 상호작용 경험 제공',
+    tech: ['React','Three.js', 'WebSocket', 'Express', 'PostgreSQL','Spring Boot'],
     link: '/kdt-game/index.html',
-    icon: '/kdt-game/knife_icon.png',
+    icon: '/metaplaza.png',
     video: '', // 시연 영상 URL
     thumbnail: '',
   },
   {
     name: 'CVS(편의점 관리 시스템)',
-    period: '2024.06 - 2024.09',
+    period: '2025.06 - 2025.09',
     summary:
-      'B2B 고객이 실시간 지표를 확인할 수 있는 데이터 모니터링 대시보드. 서버에서는 NestJS와 Prisma로 멀티 테넌트 쿼리를 최적화하고, 프론트는 가상 스크롤로 가볍게 렌더링했습니다.\n\n고객 - customer@test.com | 111111\n점주 - store@test.com | 111111\n관리자 - admin@test.com | 111111',
+      '고객 주문부터 점주 운영·본사 관리까지 실시간으로 통합된 B2B2C 편의점 관리 플랫폼입니다.\n\n고객 - customer@test.com | 111111\n점주 - store@test.com | 111111\n관리자 - admin@test.com | 111111',
     features: [
-      '실시간 판매 데이터 모니터링 대시보드',
-      '다중 지점 통계 및 비교 분석',
-      'CSV 내보내기 및 자동 보고서 생성',
-      '멀티 테넌트 권한 관리 시스템',
+      '- 고객: 모바일 주문/픽업 워크플로우 (주문 → 결제 → 픽업 알림',
+      '- 점주: 실시간 주문 알림, 주문 처리, 재고 관리',
+      '- 본사: 매장/물류 관리, 통계 리포트, 엑셀/CSV 내보내기',
+      '- 실시간 동기화: Supabase Realtime(WebSocket) 기반 알림 및 캐시 무효화',
+      '- 결제 연동: TossPayments로 안전한 결제 처리 및 이중 검증',
+      '- 보안/무결성: PostgreSQL 트랜잭션 + RLS로 재고 동시성 보장',
     ],
-    impact: '데이터 로딩 속도 38% 개선 · 구독 전환율 12% 향상',
-    tech: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Zustand'],
+    impact: '상용 수준으로 배포된 B2B2C 플랫폼으로 운영 효율성을 높임',
+    tech: ['React19', 'TypeScript', 'Vite', 'PostgreSQL', 'Supabase','Render','TossPayments'],
     link: 'https://conviproject.netlify.app/customer',
     icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
@@ -81,18 +84,19 @@ export const projects = [
   },
   {
     name: '근로자 근무 관리 어플',
-    period: '2024.03 - 2024.05',
+    period: '2025.09 - 2025.11',
     summary:
-      '포트폴리오 크리에이터를 위한 웹 에디터. 블록 기반 컴포저를 만들어 사용자 맞춤 템플릿을 쉽게 조합하고, 서버는 Edge Runtime으로 짧은 응답 시간을 유지했습니다.',
+      '알바생과 고용주를 위한 근무·스케줄 관리 웹앱으로, 인증·프로필·대시보드·QR 출퇴근·스케줄 관리를 제공합니다.',
     features: [
-      '드래그 앤 드롭 블록 기반 에디터',
-      '실시간 미리보기 및 템플릿 저장',
-      '협업 편집 및 버전 관리',
-      'Edge Runtime 기반 고속 배포',
+      '사용자 인증 및 프로필 관리',
+      '직원/고용주 전용 대시보드로 역할별 정보 제공',
+      'QR 기반 출퇴근 체크로 빠른 출근/퇴근 처리',
+      '근무 스케줄 조회 및 관리 기능',
+      '반응형 UI 및 직관적 네비게이션 ',
     ],
-    impact: '주간 활성 사용자 2.1배 증가',
-    tech: ['Next.js', 'Framer Motion', 'Edge Functions', 'Upstash Redis'],
-    link: 'https://studio.example.com',
+    impact: '출퇴근·스케줄 관리 업무를 자동화하여 운영 비용 및 소요 시간을 절감하고, 사용자(알바생·고용주)의 관리 효율성과 정확성을 향상시킵니다.',
+    tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS / PostCSS', 'Supabase'],
+    link: 'https://alabaweb.netlify.app/',
     icon: '/alba.png',
     video: '', // 시연 영상 URL
     thumbnail: '',
@@ -101,15 +105,15 @@ export const projects = [
     name: 'Asura Arena',
     period: '2023.11 - 2024.01',
     summary:
-      '실시간 협업 플레이리스트 서비스. WebSocket 기반으로 큐를 동기화하고, 서버리스 함수에서 DRM 토큰을 발급했습니다.',
+      '웹 브라우저에서 실행되는 3D 액션/멀티플레이 프로토타입으로, Three.js 렌더링과 cannon‑es 물리 통합을 통해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
     features: [
-      '실시간 협업 플레이리스트 동기화',
-      'WebSocket 기반 즉시 업데이트',
-      'DRM 토큰 자동 발급 및 관리',
-      '5,000명 동시 접속 최적화',
+      '플레이어 컨트롤: WASD 이동, Shift 달리기, K 점프, L 구르기 등 입력 및 애니메이션/물리 동기화',
+      '피드백: 플레이어 중심 카메라와 화면 오프셋으로 플레이 시야와 경기성(가시성)을 최적화',
+      '서버 소켓 연동 지점으로 멀티플레이/대기실/방 관리 통합 가능 — 빠른 온라인 테스트 지원.',
+      '라운드 카운트다운·타이머·게임 시작/종료·승자 처리 등 경기 상태 전환을 제어',
     ],
-    impact: '동시 접속 5,000명에서도 안정적인 재생 유지',
-    tech: ['React Native Web', 'WebSocket', 'Supabase', 'Cloudflare Workers'],
+    impact: 'Three.js와 cannon‑es 기반의 브라우저형 3D 물리 게임 프레임워크',
+    tech: ['Three.js','cannon‑es','Node.js','socket.io'],
     link: 'https://asuragame.netlify.app/',
     icon: '/asura.png',
     video: '/Asura.mp4', // 시연 영상 URL
@@ -119,15 +123,22 @@ export const projects = [
     name: '감정 일기',
     period: '2023.07 - 2023.09',
     summary:
-      '여행 일정을 자동으로 추천해 주는 마이크로 SaaS. OpenAI + Google Places API를 통합하고, AI 프롬프트 결과를 시각적으로 구조화했습니다.',
+      'AI 기반 감정 분석과 맞춤형 조언을 제공하는 감정 일기장 웹 애플리케이션',
     features: [
-      'AI 기반 여행 일정 자동 생성',
-      'OpenAI와 Google Places API 통합',
-      '지도 시각화 및 일정 관리',
-      '개인화된 여행 추천 알고리즘',
+      '일기 작성 및 저장',
+      'OpenAI 기반 자동 감정 분석',
+      '실시간 감정 챗봇 인터랙션',
+      '날짜별 일기 조회 및 관리',
     ],
-    impact: '런칭 3개월 만에 1,200명 유료 전환',
-    tech: ['Next.js', 'OpenAI API', 'PlanetScale'],
+    impact: '사용자의 감정 인식과 자기성찰을 돕고, 감정 변화 추이를 시각적으로 제공하여 정서적 건강 관리에 기여',
+    tech: [
+  'React',
+  'Vite',
+  'Tailwind CSS',
+  'Node.js (Express)',
+  'Supabase (PostgreSQL, Auth)',
+  'Groq Ai, OpenAI API',
+],
     link: 'https://feelingdiary.netlify.app/',
     icon: '/diary.png',
     video: '', // 시연 영상 URL
@@ -137,30 +148,21 @@ export const projects = [
 
 export const experience = [
   {
-    role: 'Product Engineer (Full Stack)',
-    company: 'Layer8',
-    period: '2022.08 - 현재',
+    role: 'Junior Software Developer',
+    company: 'Personal Projects & Academic Work',
+    period: '2023.01 - 2026.01',
     details: [
-      'React · Nest 기반 B2B SaaS 모듈화, FE 컴포넌트 40여 개와 GraphQL API 스키마 표준화',
-      '관측성(OTel + Grafana) 도입으로 LCP 32% 단축 · 장애 탐지 TTR 40% 감소',
-      '크로스 기능 스쿼드에서 데이터 엔지니어·디자이너와 OKR 주도',
-    ],
-  },
-  {
-    role: 'Full Stack Developer',
-    company: 'Freelance',
-    period: '2020.05 - 2022.07',
-    details: [
-      '스타트업 MVP를 빠르게 제작하며 고객 인터뷰와 서버 설계까지 일괄 수행',
-      '반응형 · 접근성 가이드를 준수하고, Firebase/AWS Lambda로 백엔드를 구성',
+      'React와 TypeScript를 활용하여 다양한 웹 애플리케이션 개발 경험 축적',
+      'Supabase와 PostgreSQL을 사용한 데이터베이스 설계 및 실시간 동기화 구현',
+      'Three.js와 cannon-es를 활용한 3D 웹 게임 프로토타입 개발 및 물리 엔진 통합',
+      '팀 프로젝트에서 역할 분담 및 협업을 통해 문제 해결 능력과 커뮤니케이션 스킬 향상',
     ],
   },
 ]
 
 export const contact = {
   email: 'binss0124@gmail.com',
-  github: 'https://github.com/binss-0124',
+  github: 'https://github.com/yubin-1101',
   linkedIn: '010-8321-3387',
-  resume: 'https://drive.google.com/kimfolio-resume',
-}
+};
 
