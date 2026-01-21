@@ -1,4 +1,4 @@
-import { contact, profile, projects, skills } from './data'
+import { contact, profile, projects } from './data'; // 'skills' 제거
 import { useState, useEffect } from 'react';
 function SkillsSection() {
   const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'tools'>('frontend');
