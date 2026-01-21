@@ -57,9 +57,9 @@ export const projects = [
     ],
     impact: '커뮤니티 활성화 및 실시간 상호작용 경험 제공',
     tech: ['React(Vite)','Three.js', 'WebSocket', 'Express', 'PostgreSQL','Spring Boot'],
-    link: '/kdt-game/index.html',
+    link: 'https://metaplaza-ashy.vercel.app/',
     icon: '/metaplaza.png',
-    video: '', // 시연 영상 URL
+    video: '/metaplaza.mp4', // 시연 영상 URL
     thumbnail: '',
   },
   {
@@ -98,7 +98,7 @@ export const projects = [
     tech: ['TypeScript', 'React(Vite)', 'Tailwind CSS / PostCSS', 'Supabase'],
     link: 'https://alabaweb.netlify.app/',
     icon: '/alba.png',
-    video: '', // 시연 영상 URL
+    video: '/alba1.mp4', // 시연 영상 URL
     thumbnail: '',
   },
   {
@@ -140,7 +140,7 @@ export const projects = [
 ],
     link: 'https://feelingdiary.netlify.app/',
     icon: '/diary.png',
-    video: '', // 시연 영상 URL
+    video: '/emotion.mp4', // 시연 영상 URL
     thumbnail: '',
   },
 ]
