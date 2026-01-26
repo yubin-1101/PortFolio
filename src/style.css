@@ -754,9 +754,10 @@ body {
 }
 
 .card-motto {
-  font-size: 12px;
+  font-size: 24px;
   color: var(--text-muted);
   font-style: italic;
+  font-weight: 600;
 }
 
 /* 반응형 */
