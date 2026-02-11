@@ -123,7 +123,7 @@ export const projects = [
     name: '감정 일기',
     period: '2023.07 - 2023.09',
     summary:
-      'AI 기반 감정 분석과 맞춤형 조언을 제공하는 감정 일기장 웹 애플리케이션',
+      'AI 기반 감정 분석과 맞춤형 조언을 제공하는 감정 일기장 웹 애플리케이션\n\n데모 - dev@gmail.com | dev123',
     features: [
       '일기 작성 및 저장',
       'OpenAI 기반 자동 감정 분석',
