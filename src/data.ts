@@ -77,7 +77,7 @@ export const projects = [
     ],
     impact: '상용 수준으로 배포된 B2B2C 플랫폼으로 운영 효율성을 높임',
     tech: ['React19(Vite)', 'TypeScript', 'PostgreSQL', 'Supabase','Render','TossPayments'],
-    link: 'https://conviproject.netlify.app/customer',
+    link: 'https://convipj.netlify.app/',
     icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
     thumbnail: '',
