@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" status)",
+      "Bash(git -C \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" push origin main)"
+    ]
+  }
+}

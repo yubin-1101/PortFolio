@@ -11,7 +11,7 @@ export const profile = {
   intro: '안녕하세요! AI와 함께 아이디어를 빠르게 현실로 만드는 풀스택 개발자 조유빈입니다. Vibe Coding으로 프론트엔드부터 백엔드, 배포까지 전 과정을 혼자서도 완성합니다. 견고한 시스템 설계와 효율적인 AI 활용으로, 팀 단위의 생산성을 1인 개발로 실현합니다.',
   about: [
     '1. React와 Supabase를 중심으로 한 풀스택 개발자로서, 아이디어를 빠르게 실현하는 데 집중합니다.',
-    '2. MetaPlaza(3D 커뮤니티), CVS(편의점 관리 시스템), 근로자 근무 관리 앱, Asura Arena(3D 멀티플레이 프로토타입), AI 기반 감정 일기 등 웹·게임·B2B2C 서비스 전반의 기획·개발·운영을 통해 실제 사용자에게 가치를 전달해왔습니다.',
+    '2. MetaPlaza(3D 커뮤니티), CVS(편의점 관리 시스템), Kanban Board, 근로자 근무 관리 앱, Asura Arena(3D 멀티플레이 프로토타입), AI 기반 감정 일기 등 웹·게임·B2B2C 서비스 전반의 기획·개발·운영을 통해 실제 사용자에게 가치를 전달해왔습니다.',
     '3. Claude Code, Cursor 등 Vibe Coding 도구를 적극 활용하여 빠른 프로토타이핑과 아이디어 검증을 실천하며, 단순 코딩이 아닌 창의적 문제 해결 중심의 개발을 추구합니다.',
   ],
 }
@@ -80,6 +80,25 @@ export const projects = [
     link: 'https://convipj.netlify.app/',
     icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
+    thumbnail: '',
+  },
+  {
+    name: 'Kanban Board',
+    period: '2026.02 - 2026.02',
+    summary:
+      '드래그 앤 드롭 기반의 칸반 보드 프로젝트 관리 웹 애플리케이션입니다. 직관적인 UI로 태스크를 관리하고, 실시간 상태 업데이트를 지원합니다.\n\n테스트 계정 - test@gmail.com | 111111\n계정2 - dev@gmail.com | dev123\n',
+    features: [
+      '협엽: 팀원 초대 및 권한 관리로 협업 지원',
+      '드래그 앤 드롭: 직관적인 카드 이동으로 태스크 상태 변경',
+      '보드 관리: 다중 보드 생성/수정/삭제 및 컬럼 커스터마이징',
+      '태스크 관리: 태스크 생성, 라벨, 우선순위, 마감일 설정',
+      '실시간 동기화: 변경사항 즉시 반영 및 데이터 영속성 보장',
+    ],
+    impact: '프로젝트 관리 효율성을 높이는 직관적인 태스크 관리 도구',
+    tech: ['React(Vite)', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'Supabase'],
+    link: 'https://kanbboard.netlify.app/login',
+    icon: '/kanban.png',
+    video: '/kanban.mp4', // 시연 영상 URL
     thumbnail: '',
   },
   {
