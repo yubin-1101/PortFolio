@@ -97,7 +97,7 @@ export const projects = [
     impact: '프로젝트 관리 효율성을 높이는 직관적인 태스크 관리 도구',
     tech: ['React(Vite)', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'Supabase'],
     link: 'https://kanbboard.netlify.app/login',
-    icon: '/kanban.png',
+    icon: '/board.png',
     video: '/kanban.mp4', // 시연 영상 URL
     thumbnail: '',
   },
