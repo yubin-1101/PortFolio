@@ -133,7 +133,7 @@ export const projects = [
     ],
     impact: 'JS, CSS, Socket.io 를 활용한 웹 기반의 브라우저형 3D 물리 게임 프레임워크',
     tech: ['JavaScript','CSS','Three.js','Cannon‑es','Node.js','Socket.io'],
-    link: 'https://asuragame.onrender.com/',
+    link: 'https://asuraa.netlify.app/',
     icon: '/asura.png',
     video: '/Asura.mp4', // 시연 영상 URL
     thumbnail: '',
