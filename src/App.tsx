@@ -83,6 +83,7 @@ function SkillsSection() {
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [modalTab, setModalTab] = useState<'info' | 'troubleshooting'>('info');
   const [terminalLines, setTerminalLines] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(true);
   const [typewriterText, setTypewriterText] = useState('');
@@ -210,6 +211,7 @@ function App() {
               className={`sidebar-icon ${selectedProject?.name === project.name ? 'active' : ''}`}
               onClick={() => {
                 setSelectedProject(project);
+                setModalTab('info');
                 scrollToSection('projects');
               }}
               title={project.name}
@@ -560,7 +562,7 @@ function App() {
                   <div className="project-actions">
                     <button 
                       className="action-btn details"
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => { setSelectedProject(project); setModalTab('info'); }}
                     >
                       <span>{'{ }'}</span> Details
                     </button>
@@ -678,79 +680,126 @@ function App() {
               </div>
               <span className="modal-title">{selectedProject.name}.md</span>
             </div>
+            <div className="modal-tabs">
+              <button
+                className={`modal-tab ${modalTab === 'info' ? 'active' : ''}`}
+                onClick={() => setModalTab('info')}
+              >
+                📋 프로젝트 정보
+              </button>
+              <button
+                className={`modal-tab ${modalTab === 'troubleshooting' ? 'active' : ''}`}
+                onClick={() => setModalTab('troubleshooting')}
+              >
+                🔧 트러블 슈팅
+              </button>
+            </div>
             <div className="modal-body">
-              <div className="modal-section">
-                <h3># {selectedProject.name}</h3>
-                <p className="modal-period">📅 {selectedProject.period}</p>
-              </div>
-
-              <div className="modal-section">
-                <h4>## 설명</h4>
-                <p>{selectedProject.summary.split('\n\n')[0]}</p>
-              </div>
-
-              {selectedProject.summary.includes('|') && (
-                <div className="modal-section test-accounts">
-                  <h4>## 테스트 계정</h4>
-                  <div className="accounts-grid">
-                    {selectedProject.summary.split('\n').slice(2).map((line, idx) => {
-                      const [role, credentials] = line.split(' - ');
-                      const [email, password] = credentials?.split(' | ') || ['', ''];
-                      return (
-                        <div key={idx} className="account-item">
-                          <span className="account-role">{role}</span>
-                          <code>{email}</code>
-                          <code className="password">{password}</code>
-                        </div>
-                      );
-                    })}
+              {modalTab === 'info' ? (
+                <>
+                  <div className="modal-section">
+                    <h3># {selectedProject.name}</h3>
+                    <p className="modal-period">📅 {selectedProject.period}</p>
                   </div>
-                </div>
-              )}
 
-              {(selectedProject as any).features && (
-                <div className="modal-section">
-                  <h4>## 주요 기능</h4>
-                  <ul className="features-list">
-                    {(selectedProject as any).features.map((feature: string, idx: number) => (
-                      <li key={idx}>
-                        <span className="feature-bullet">▸</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                  <div className="modal-section">
+                    <h4>## 설명</h4>
+                    <p>{selectedProject.summary.split('\n\n')[0]}</p>
+                  </div>
 
-              <div className="modal-section">
-                <h4>## 영향도</h4>
-                <div className="impact-box">
-                  <span className="impact-icon">📊</span>
-                  {selectedProject.impact}
-                </div>
-              </div>
+                  {selectedProject.summary.includes('|') && (
+                    <div className="modal-section test-accounts">
+                      <h4>## 테스트 계정</h4>
+                      <div className="accounts-grid">
+                        {selectedProject.summary.split('\n').slice(2).map((line, idx) => {
+                          const [role, credentials] = line.split(' - ');
+                          const [email, password] = credentials?.split(' | ') || ['', ''];
+                          return (
+                            <div key={idx} className="account-item">
+                              <span className="account-role">{role}</span>
+                              <code>{email}</code>
+                              <code className="password">{password}</code>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
 
-              <div className="modal-section">
-                <h4>## 기술 스택</h4>
-                <div className="tech-tags">
-                  {selectedProject.tech.map((tech, idx) => (
-                    <span key={idx} className="tech-tag">
-                      {typeof tech === 'string' ? tech : (tech as any)?.name}
-                    </span>
+                  {(selectedProject as any).features && (
+                    <div className="modal-section">
+                      <h4>## 주요 기능</h4>
+                      <ul className="features-list">
+                        {(selectedProject as any).features.map((feature: string, idx: number) => (
+                          <li key={idx}>
+                            <span className="feature-bullet">▸</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="modal-section">
+                    <h4>## 영향도</h4>
+                    <div className="impact-box">
+                      <span className="impact-icon">📊</span>
+                      {selectedProject.impact}
+                    </div>
+                  </div>
+
+                  <div className="modal-section">
+                    <h4>## 기술 스택</h4>
+                    <div className="tech-tags">
+                      {selectedProject.tech.map((tech, idx) => (
+                        <span key={idx} className="tech-tag">
+                          {typeof tech === 'string' ? tech : (tech as any)?.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="modal-section">
+                    <h3># {selectedProject.name} - 트러블 슈팅</h3>
+                  </div>
+
+                  {(selectedProject as any).troubleshooting?.map((item: any, idx: number) => (
+                    <div key={idx} className="troubleshooting-item">
+                      <div className="ts-section">
+                        <h4>❗ 문제</h4>
+                        <p className="ts-problem">{item.problem}</p>
+                      </div>
+                      <div className="ts-section">
+                        <h4>💡 해결책</h4>
+                        <p className="ts-solution">{item.solution}</p>
+                      </div>
+                      <div className="ts-section">
+                        <h4>✅ 결과</h4>
+                        <p className="ts-result">{item.result}</p>
+                      </div>
+                    </div>
                   ))}
-                </div>
-              </div>
+
+                  {!(selectedProject as any).troubleshooting?.length && (
+                    <div className="modal-section">
+                      <p>등록된 트러블 슈팅 내역이 없습니다.</p>
+                    </div>
+                  )}
+                </>
+              )}
 
               <div className="modal-actions">
-                <a 
-                  href={selectedProject.link} 
-                  target="_blank" 
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
                   rel="noreferrer"
                   className="modal-btn primary"
                 >
                   🔗 라이브 데모
                 </a>
-                <button 
+                <button
                   className="modal-btn secondary"
                   onClick={() => setSelectedProject(null)}
                 >

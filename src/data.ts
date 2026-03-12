@@ -61,6 +61,33 @@ export const projects = [
     icon: '/metaplaza.png',
     video: '/metaplaza.mp4', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '다양한 멀티플레이어 미니게임 구현 필요',
+        solution: '오목(15x15, 5목 승리), 에임 맞추기(30초 타겟 클릭), 끝말잇기(한국어기초사전 Open API 연동, 턴당 10초), 라이어 게임(4인 이상, 시민 vs 라이어, 토론 60초+투표), 스무고개(출제자가 제시어 선정, 예/아니오 질문, 최대 20개)',
+        result: '다양한 장르의 미니게임 제공, WebSocket 기반 실시간 동기화',
+      },
+      {
+        problem: '실시간 방 목록, 관전자 수, 중복 방 표시, 대기방 중복 입장',
+        solution: 'WebSocket으로 방 생성/삭제 실시간 동기화, 관전자 수 항상 표시, 중복 방 필터링, 대기방 중복 입장 방지 로직',
+        result: '안정적인 로비, 게임 중 관전 가능, 중복 입장 차단',
+      },
+      {
+        problem: 'DataInitializer에서 매번 전체 사용자 조회, SQL 로깅 오버헤드, WebSocket NullPointerException',
+        solution: 'lazy-initialization 활성화, saveAll() 배치 처리, SQL 로깅 비활성화, 로깅 레벨 WARN, 세션 속성 null 체크, @Transactional 추가',
+        result: 'DataInitializer 수 초→1초, WebSocket/친구 API 오류 해결',
+      },
+      {
+        problem: '실시간 캐릭터 동기화, 중복 로그인, 재연결',
+        solution: 'STOMP 프로토콜, /app/multiplayer.move 위치 브로드캐스트, 세션 ID 기반 중복 로그인 방지, 재연결 로직',
+        result: '안정적인 실시간 동기화, 중복 접속 차단',
+      },
+      {
+        problem: 'Gold Coin 충전 시 결제 검증 및 보안',
+        solution: 'TossPayments SDK 연동, 결제 성공 시 서버 검증(/api/payment/verify), 금액 일치 확인, 트랜잭션 처리',
+        result: '안전한 결제 시스템, Gold Coin 충전 성공',
+      },
+    ],
   },
   {
     name: 'CVS(편의점 관리 시스템)',
@@ -81,6 +108,33 @@ export const projects = [
     icon: '/cvs.png',
     video: '/Cvs.mov', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '고객/점주/본사 3개 역할의 완전히 다른 UI/UX 및 권한 체계 필요',
+        solution: 'Supabase RLS 정책으로 테이블 레벨 접근 제어, profiles.role + auth.uid() 동적 권한 검증, React Router Protected Routes',
+        result: '역할별 완벽히 분리된 경험, 데이터 보안 강화',
+      },
+      {
+        problem: '토스페이먼츠 결제 후 네트워크 오류/새로고침으로 중복 주문 발생',
+        solution: '3단계 방어 (sessionStorage 상태 추적, PaymentKey unique constraint, 주문 생성 전 체크), PostgreSQL 트랜잭션 원자성 보장',
+        result: '중복 결제 완전 차단, 안정적인 결제 프로세스',
+      },
+      {
+        problem: '주문 시 재고 차감 및 여러 사용자 간 재고 동기화 필요',
+        solution: 'PostgreSQL Trigger로 order_items 삽입 시 자동 재고 차감, inventory_transactions 이력 관리, Supabase Realtime 구독',
+        result: '완전 자동화된 재고 관리, 실시간 UI 업데이트',
+      },
+      {
+        problem: '지점 발주부터 입고까지 복잡한 프로세스 관리',
+        solution: 'supply_requests/items/shipments 3개 테이블 연계, 상태별 자동 처리, 배송 완료 시 재고 자동 증가, 실시간 알림',
+        result: '완전한 공급망 관리 시스템, 효율적인 물류 처리',
+      },
+      {
+        problem: '대규모 코드베이스에서 타입 오류 및 개발 생산성 저하',
+        solution: 'Supabase 자동 생성 타입 + 커스텀 타입, Zustand/TanStack Query 제네릭 타입, TypeScript Strict Mode',
+        result: '완벽한 타입 추론, IDE 자동완성, null/undefined 안전성 보장',
+      },
+    ],
   },
   {
     name: 'Kanban Board',
@@ -100,6 +154,23 @@ export const projects = [
     icon: '/board.png',
     video: '/kanban.mp4', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '로그인 상태 변경 감지 콜백 안에서 사용자 프로필을 불러오는 비동기 요청을 바로 실행하면, Supabase 내부 잠금(lock)과 충돌하여 앱 전체가 멈추는 데드락 발생',
+        solution: '콜백 내부에서는 로그인 상태만 즉시 반영하고, 프로필 조회 같은 비동기 작업은 이벤트 루프를 한 턴 지연시켜 별도로 실행하는 지연 호출 패턴 적용. 동기 처리와 비동기 처리를 분리하여 내부 잠금 충돌 방지',
+        result: '로그인/로그아웃 시 화면이 멈추지 않고 안정적으로 인증 초기화 완료, 사용자 프로필도 정상적으로 로드',
+      },
+      {
+        problem: '그림을 그리는 중 페이지를 빠르게 닫거나 이동하면, 저장 요청이 1.5초 뒤에 모아서 전송되는 구조라 아직 전송되지 않은 드로잉 데이터가 소실됨',
+        solution: '이중 저장 전략 도입 — 평소에는 1.5초 간격으로 모아서 저장하되, 페이지 이탈이 감지되면 아직 저장되지 않은 데이터를 즉시 강제 저장하는 정리(cleanup) 로직 추가',
+        result: '탭을 닫거나 다른 페이지로 이동해도 드로잉 데이터가 유실되지 않고 안전하게 저장됨',
+      },
+      {
+        problem: '협업 그림판에서 다른 사용자의 커서 위치를 실시간으로 보여주기 위해 마우스가 움직일 때마다 위치를 전송하면, 초당 수백 건의 네트워크 요청이 발생하여 서버 부하 급증',
+        solution: '이중 제한(throttling) 방식 적용 — 화면 주사율에 맞춰 업데이트를 동기화하면서 동시에 최소 50ms 간격을 두어 초당 최대 20회로 전송 횟수 제한',
+        result: '네트워크 트래픽을 대폭 줄이면서도 부드러운 커서 움직임 제공, 여러 사용자가 동시 접속해도 앱 성능 저하 없이 실시간 협업 가능',
+      },
+    ],
   },
   {
     name: '근로자 근무 관리 어플',
@@ -119,6 +190,13 @@ export const projects = [
     icon: '/alba.png',
     video: '/alba1.mp4', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: 'Supabase 데이터베이스 연결이 안 되면 로그인, 대시보드, QR 출퇴근 등 모든 기능이 먹통이 되어서 개발이나 시연이 불가능',
+        solution: 'isDemoMode() 함수를 만들어서 userId가 demo-로 시작하면 데모 모드로 판단. 로그인 시 test@example.com / password123로 접속하면 Supabase를 거치지 않고 localStorage에 유저 정보를 저장. 대시보드, QR, 직원관리 등 각 페이지에서도 데모 모드일 때는 가짜 데이터를 자동 생성하도록 처리',
+        result: '서버 연결 없이도 "테스트 계정으로 접속" 버튼 하나로 모든 기능을 체험할 수 있고, 실제 Supabase가 연결되면 자동으로 실제 데이터로 전환됨',
+      },
+    ],
   },
   {
     name: 'Asura Arena',
@@ -137,6 +215,33 @@ export const projects = [
     icon: '/asura.png',
     video: '/Asura.mp4', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '멀티플레이어 게임 특성상 혼자서는 플레이 불가능, 플레이어 부족 시 게임 진행 어려움',
+        solution: '5단계 상태 머신(idle/무기탐색/추격/도망/공격) 기반 AI 봇 구현, 난이도 3단계(Easy/Normal/Hard), 저체력 타겟 우선 공격/다수 적 회피 전략, 실시간 의사결정 시스템',
+        result: '1인 플레이 가능, 지능적인 봇 행동으로 멀티플레이어 경험 제공, 난이도별 차별화된 플레이 경험',
+      },
+      {
+        problem: '네트워크 지연 및 클라이언트 간 불일치',
+        solution: 'Socket.IO 실시간 브로드캐스트, 서버 권한 HP/데미지 검증, gameUpdate 이벤트 동기화',
+        result: '안정적인 8인 멀티플레이어, 치팅 방지',
+      },
+      {
+        problem: '무기 관리 및 균형 조정 필요',
+        solution: 'weapon_data.json 기반 무기별 데미지/넉백강도·지속시간/발사체속도/공격판정 구간(activationWindows) 정의, 자동 리스폰(맵에 항상 10개 유지)',
+        result: '무기별 차별화된 전투감, 균형잡힌 게임플레이',
+      },
+      {
+        problem: '3D 환경에서 정확한 충돌 처리 필요',
+        solution: 'AABB 기반 충돌 감지, X/Z축 개별 테스트로 벽 슬라이딩, 단차 오르기 구현',
+        result: '자연스러운 캐릭터 이동, AI 봇 경로 탐색',
+      },
+      {
+        problem: '여러 플레이어 공격 시 킬 판정 모호',
+        solution: 'lastHitBy 추적 시스템, killProcessed 플래그로 중복 방지, 서버 권한 스코어보드',
+        result: '정확한 킬 부여, 조작 불가능한 스코어 관리',
+      },
+    ],
   },
   {
     name: '감정 일기',
@@ -161,6 +266,18 @@ export const projects = [
     icon: '/diary.png',
     video: '/emotion.mp4', // 시연 영상 URL
     thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '로컬 개발 환경에서는 백엔드 서버와 프론트엔드가 정상적으로 통신되었으나, Netlify에 배포하자 모든 API 요청이 404 에러를 반환',
+        solution: '기존 로컬 전용 백엔드 서버를 Netlify의 서버리스 함수 방식으로 전환하고, 배포 설정 파일에 API 경로 연결 규칙을 추가. 프론트엔드도 배포 환경에 맞게 상대 경로로 API를 호출하도록 수정하고, 외부 요청 허용을 위한 CORS 설정을 각 함수에 적용',
+        result: '감정 분석, 감정 코칭, 조언 생성 등 API를 개별 서버리스 함수로 분리 배포하여 로컬과 배포 환경 모두에서 동일하게 정상 동작',
+      },
+      {
+        problem: '감정 분석에 사용하는 외부 AI 서비스의 API 키가 없거나 서버가 응답하지 않을 경우, 일기 저장과 감정 코칭 기능이 완전히 중단되어 사용자가 앱을 이용할 수 없었음',
+        solution: '3단계 대체 처리 방식을 적용: ① 먼저 외부 AI 서비스로 감정 분석 시도 → ② 실패 시 한국어 감정 키워드 매칭 방식으로 자체 분석 수행 → ③ 감정 코칭도 AI 응답 실패 시 감정별로 미리 준비된 응답을 제공. 모든 외부 요청에 오류 처리를 적용하여 실패해도 앱이 멈추지 않도록 보장',
+        result: '외부 AI 서비스에 장애가 발생하거나 API 키가 없는 환경에서도 자체 감정 분석과 코칭 응답이 정상 제공되어, 어떤 상황에서든 핵심 기능이 동작하는 안정적인 서비스 구현',
+      },
+    ],
   },
 ]
 

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git -C \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" status)",
-      "Bash(git -C \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" push origin main)"
+      "Bash(git -C \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" push origin main)",
+      "Bash(cd \"C:\\\\Users\\\\20201\\\\Desktop\\\\포트폴리오\" && npx tsc --noEmit 2>&1 | head -20)"
     ]
   }
 }
