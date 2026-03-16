@@ -45,7 +45,7 @@ export const skills = {
 export const projects = [
   {
     name: '3D Community',
-    period: '2025.02 - 진행 중',
+    period: '2025.09 - 2025.12',
     summary:
       'MetaPlaza는 React, Spring Boot 기반의 3D 소셜 커뮤니티 플랫폼입니다. 가상 공간에서 실시간 소통, 3D 캐릭터, 게시판, 친구 시스템 등 다양한 기능을 제공합니다.',
     features: [
@@ -200,7 +200,7 @@ export const projects = [
   },
   {
     name: '감정 일기',
-    period: '2023.07 - 2023.09',
+    period: '2025.12 - 2026.01',
     summary:
       'AI 기반 감정 분석과 맞춤형 조언을 제공하는 감정 일기장 웹 애플리케이션\n\n데모 - dev@gmail.com | dev123',
     features: [
@@ -240,7 +240,7 @@ export const experience = [
   {
     role: 'Junior Software Developer',
     company: 'Personal Projects & Academic Work',
-    period: '2023.01 - 2026.01',
+    period: '2024.01 - 2026.01',
     details: [
       'React와 TypeScript를 활용하여 다양한 웹 애플리케이션 개발 경험 축적',
       'Supabase와 PostgreSQL을 사용한 데이터베이스 설계 및 실시간 동기화 구현',
@@ -270,7 +270,7 @@ export const devProjects = [
   },
   {
     name: 'Asura Arena',
-    period: '2023.11 - 2024.01',
+    period: '2025.11 - 개발중',
     summary:
       '웹 브라우저에서 실행되는 3D 액션/멀티플레이 게임으로, Socket.io를 활용해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
     features: [
