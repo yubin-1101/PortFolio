@@ -199,51 +199,6 @@ export const projects = [
     ],
   },
   {
-    name: 'Asura Arena',
-    period: '2023.11 - 2024.01',
-    summary:
-      '웹 브라우저에서 실행되는 3D 액션/멀티플레이 게임으로, Socket.io를 활용해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
-    features: [
-      '플레이어 컨트롤: WASD 이동, Shift 달리기, K 점프, L 구르기 등 입력 및 애니메이션/물리 동기화',
-      '피드백: 플레이어 중심 카메라와 화면 오프셋으로 플레이 시야와 경기성(가시성)을 최적화',
-      '서버 소켓 연동 지점으로 멀티플레이/대기실/방 관리 통합 가능 — 빠른 온라인 테스트 지원.',
-      '라운드 카운트다운·타이머·게임 시작/종료·승자 처리 등 경기 상태 전환을 제어',
-    ],
-    impact: 'JS, CSS, Socket.io 를 활용한 웹 기반의 브라우저형 3D 물리 게임 프레임워크',
-    tech: ['JavaScript','CSS','Three.js','Cannon‑es','Node.js','Socket.io'],
-    link: 'https://asuraa.netlify.app/',
-    icon: '/asura.png',
-    video: '/Asura.mp4', // 시연 영상 URL
-    thumbnail: '',
-    troubleshooting: [
-      {
-        problem: '멀티플레이어 게임 특성상 혼자서는 플레이 불가능, 플레이어 부족 시 게임 진행 어려움',
-        solution: '5단계 상태 머신(idle/무기탐색/추격/도망/공격) 기반 AI 봇 구현, 난이도 3단계(Easy/Normal/Hard), 저체력 타겟 우선 공격/다수 적 회피 전략, 실시간 의사결정 시스템',
-        result: '1인 플레이 가능, 지능적인 봇 행동으로 멀티플레이어 경험 제공, 난이도별 차별화된 플레이 경험',
-      },
-      {
-        problem: '네트워크 지연 및 클라이언트 간 불일치',
-        solution: 'Socket.IO 실시간 브로드캐스트, 서버 권한 HP/데미지 검증, gameUpdate 이벤트 동기화',
-        result: '안정적인 8인 멀티플레이어, 치팅 방지',
-      },
-      {
-        problem: '무기 관리 및 균형 조정 필요',
-        solution: 'weapon_data.json 기반 무기별 데미지/넉백강도·지속시간/발사체속도/공격판정 구간(activationWindows) 정의, 자동 리스폰(맵에 항상 10개 유지)',
-        result: '무기별 차별화된 전투감, 균형잡힌 게임플레이',
-      },
-      {
-        problem: '3D 환경에서 정확한 충돌 처리 필요',
-        solution: 'AABB 기반 충돌 감지, X/Z축 개별 테스트로 벽 슬라이딩, 단차 오르기 구현',
-        result: '자연스러운 캐릭터 이동, AI 봇 경로 탐색',
-      },
-      {
-        problem: '여러 플레이어 공격 시 킬 판정 모호',
-        solution: 'lastHitBy 추적 시스템, killProcessed 플래그로 중복 방지, 서버 권한 스코어보드',
-        result: '정확한 킬 부여, 조작 불가능한 스코어 관리',
-      },
-    ],
-  },
-  {
     name: '감정 일기',
     period: '2023.07 - 2023.09',
     summary:
@@ -291,6 +246,71 @@ export const experience = [
       'Supabase와 PostgreSQL을 사용한 데이터베이스 설계 및 실시간 동기화 구현',
       'Three.js와 cannon-es를 활용한 3D 웹 게임 프로토타입 개발 및 물리 엔진 통합',
       '팀 프로젝트에서 역할 분담 및 협업을 통해 문제 해결 능력과 커뮤니케이션 스킬 향상',
+    ],
+  },
+]
+
+export const devProjects = [
+  {
+    name: 'Vibe-coding',
+    period: '2026.03 - 진행 중',
+    summary:
+      'Vibe Coding 기반의 개발 프로젝트입니다. AI 도구를 활용하여 빠르게 프로토타이핑하고 아이디어를 현실로 구현합니다.',
+    features: [
+      'AI 기반 빠른 프로토타이핑',
+      'Claude Code 활용 개발',
+    ],
+    impact: 'AI 도구를 활용한 효율적인 개발 워크플로우 구축',
+    tech: ['TypeScript', 'React', 'Claude Code'],
+    link: 'https://vbcodings.netlify.app/',
+    icon: './vibe-coding.png',
+    video: './vibecoding.mp4',
+    thumbnail: '',
+    troubleshooting: [],
+  },
+  {
+    name: 'Asura Arena',
+    period: '2023.11 - 2024.01',
+    summary:
+      '웹 브라우저에서 실행되는 3D 액션/멀티플레이 게임으로, Socket.io를 활용해 플레이어간 실시간 상호작용을 구현한 게임 프레임워크입니다',
+    features: [
+      '플레이어 컨트롤: WASD 이동, Shift 달리기, K 점프, L 구르기 등 입력 및 애니메이션/물리 동기화',
+      '피드백: 플레이어 중심 카메라와 화면 오프셋으로 플레이 시야와 경기성(가시성)을 최적화',
+      '서버 소켓 연동 지점으로 멀티플레이/대기실/방 관리 통합 가능 — 빠른 온라인 테스트 지원.',
+      '라운드 카운트다운·타이머·게임 시작/종료·승자 처리 등 경기 상태 전환을 제어',
+    ],
+    impact: 'JS, CSS, Socket.io 를 활용한 웹 기반의 브라우저형 3D 물리 게임 프레임워크',
+    tech: ['JavaScript','CSS','Three.js','Cannon‑es','Node.js','Socket.io'],
+    link: 'https://asuraa.netlify.app/',
+    icon: '/asura.png',
+    video: '/Asura.mp4',
+    thumbnail: '',
+    troubleshooting: [
+      {
+        problem: '멀티플레이어 게임 특성상 혼자서는 플레이 불가능, 플레이어 부족 시 게임 진행 어려움',
+        solution: '5단계 상태 머신(idle/무기탐색/추격/도망/공격) 기반 AI 봇 구현, 난이도 3단계(Easy/Normal/Hard), 저체력 타겟 우선 공격/다수 적 회피 전략, 실시간 의사결정 시스템',
+        result: '1인 플레이 가능, 지능적인 봇 행동으로 멀티플레이어 경험 제공, 난이도별 차별화된 플레이 경험',
+      },
+      {
+        problem: '네트워크 지연 및 클라이언트 간 불일치',
+        solution: 'Socket.IO 실시간 브로드캐스트, 서버 권한 HP/데미지 검증, gameUpdate 이벤트 동기화',
+        result: '안정적인 8인 멀티플레이어, 치팅 방지',
+      },
+      {
+        problem: '무기 관리 및 균형 조정 필요',
+        solution: 'weapon_data.json 기반 무기별 데미지/넉백강도·지속시간/발사체속도/공격판정 구간(activationWindows) 정의, 자동 리스폰(맵에 항상 10개 유지)',
+        result: '무기별 차별화된 전투감, 균형잡힌 게임플레이',
+      },
+      {
+        problem: '3D 환경에서 정확한 충돌 처리 필요',
+        solution: 'AABB 기반 충돌 감지, X/Z축 개별 테스트로 벽 슬라이딩, 단차 오르기 구현',
+        result: '자연스러운 캐릭터 이동, AI 봇 경로 탐색',
+      },
+      {
+        problem: '여러 플레이어 공격 시 킬 판정 모호',
+        solution: 'lastHitBy 추적 시스템, killProcessed 플래그로 중복 방지, 서버 권한 스코어보드',
+        result: '정확한 킬 부여, 조작 불가능한 스코어 관리',
+      },
     ],
   },
 ]

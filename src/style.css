@@ -1415,6 +1415,49 @@ body {
 }
 
 /* ===== 프로젝트 섹션 ===== */
+.projects-tabbed {
+  width: 100%;
+}
+
+.projects-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: var(--bg-secondary);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.project-tab {
+  flex: 1;
+  padding: 14px 24px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.project-tab:hover {
+  background: rgba(122, 162, 247, 0.1);
+  color: var(--text-secondary);
+}
+
+.project-tab.active {
+  background: var(--accent-blue);
+  color: var(--bg-primary);
+  box-shadow: 0 4px 12px rgba(122, 162, 247, 0.3);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

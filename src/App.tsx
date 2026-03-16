@@ -1,4 +1,4 @@
-import { contact, profile, projects } from './data'; // 'skills' 제거
+import { contact, profile, projects, devProjects } from './data';
 import { useState, useEffect } from 'react';
 function SkillsSection() {
   const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'tools'>('frontend');
@@ -90,6 +90,7 @@ function App() {
   const [isTypewriterComplete, setIsTypewriterComplete] = useState(false);
   const [taglineText, setTaglineText] = useState('');
   const [isTaglineComplete, setIsTaglineComplete] = useState(false);
+  const [projectTab, setProjectTab] = useState<'completed' | 'developing'>('completed');
   const [qrPattern, setQrPattern] = useState<boolean[]>([]);
 
   // QR 패턴 애니메이션
@@ -205,11 +206,13 @@ function App() {
       {/* 사이드바 - 프로젝트 아이콘 */}
       <aside className="sidebar">
         <div className="sidebar-icons">
-          {projects.map((project, index) => (
-            <button 
+          {[...projects, ...devProjects].map((project, index) => (
+            <button
               key={index}
               className={`sidebar-icon ${selectedProject?.name === project.name ? 'active' : ''}`}
               onClick={() => {
+                const isDev = devProjects.some(p => p.name === project.name);
+                setProjectTab(isDev ? 'developing' : 'completed');
                 setSelectedProject(project);
                 setModalTab('info');
                 scrollToSection('projects');
@@ -485,98 +488,117 @@ function App() {
               </h2>
             </div>
             
-            <div className="projects-grid">
-              {projects.map((project, index) => (
-                <article key={project.name} className="project-card">
-                  <div className="project-header">
-                    <div className="project-index">
-                      {project.icon ? (
-                        <img src={project.icon} alt={project.name} className="project-index-icon" />
-                      ) : (
-                        <>
-                          <span className="bracket">[</span>
-                          <span className="index">{index}</span>
-                          <span className="bracket">]</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="project-title-area">
-                      <h3>{project.name}</h3>
-                      <span className="project-period">{project.period}</span>
-                    </div>
-                  </div>
+            <div className="projects-tabbed">
+              <div className="projects-tabs">
+                <button
+                  className={`project-tab ${projectTab === 'completed' ? 'active' : ''}`}
+                  onClick={() => setProjectTab('completed')}
+                >
+                  <span className="tab-icon">✅</span> 프로젝트
+                </button>
+                <button
+                  className={`project-tab ${projectTab === 'developing' ? 'active' : ''}`}
+                  onClick={() => setProjectTab('developing')}
+                >
+                  <span className="tab-icon">🚧</span> 개발중인 프로젝트
+                </button>
+              </div>
 
-                  <div className="project-video-wrapper">
-                    {project.video ? (
-                      (() => {
-                        const videoUrl = project.video;
-                        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                          let embedUrl = '';
-                          if (videoUrl.includes('youtube.com/embed')) {
-                            embedUrl = videoUrl;
-                          } else if (videoUrl.includes('youtu.be/')) {
-                            const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
-                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                          } else if (videoUrl.includes('youtube.com/watch')) {
-                            const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
-                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+              <div className="projects-grid">
+                {(projectTab === 'completed' ? projects : devProjects).map((project, index) => (
+                  <article key={project.name} className="project-card">
+                    <div className="project-header">
+                      <div className="project-index">
+                        {project.icon ? (
+                          <img src={project.icon} alt={project.name} className="project-index-icon" />
+                        ) : (
+                          <>
+                            <span className="bracket">[</span>
+                            <span className="index">{index}</span>
+                            <span className="bracket">]</span>
+                          </>
+                        )}
+                      </div>
+                      <div className="project-title-area">
+                        <h3>{project.name}</h3>
+                        <span className="project-period">{project.period}</span>
+                      </div>
+                    </div>
+
+                    <div className="project-video-wrapper">
+                      {project.video ? (
+                        (() => {
+                          const videoUrl = project.video;
+                          if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                            let embedUrl = '';
+                            if (videoUrl.includes('youtube.com/embed')) {
+                              embedUrl = videoUrl;
+                            } else if (videoUrl.includes('youtu.be/')) {
+                              const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
+                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            } else if (videoUrl.includes('youtube.com/watch')) {
+                              const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
+                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            }
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                title={`${project.name} 시연 영상`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="project-video"
+                              />
+                            );
                           }
                           return (
-                            <iframe
-                              src={embedUrl}
-                              title={`${project.name} 시연 영상`}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className="project-video"
-                            />
+                            <video src={videoUrl} controls className="project-video" preload="metadata" />
                           );
-                        }
-                        return (
-                          <video src={videoUrl} controls className="project-video" preload="metadata" />
-                        );
-                      })()
-                    ) : (
-                      <div className="video-placeholder">
-                        <span className="placeholder-icon">{'</>'}</span>
-                        <span className="placeholder-text">Preview</span>
-                      </div>
-                    )}
-                  </div>
+                        })()
+                      ) : (
+                        <div className="video-placeholder">
+                          <span className="placeholder-icon">{'</>'}</span>
+                          <span className="placeholder-text">Preview</span>
+                        </div>
+                      )}
+                    </div>
 
-                  <p className="project-summary">{project.summary.split('\n\n')[0]}</p>
+                    <p className="project-summary">{project.summary.split('\n\n')[0]}</p>
 
-                  <div className="project-tech">
-                    {project.tech.map((tech) => (
-                      <span key={typeof tech === 'string' ? tech : (tech as any).name} className="tech-tag">
-                        {typeof tech === 'string' ? tech : (tech as any).name}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="project-tech">
+                      {project.tech.map((tech) => (
+                        <span key={typeof tech === 'string' ? tech : (tech as any).name} className="tech-tag">
+                          {typeof tech === 'string' ? tech : (tech as any).name}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className="project-impact">
-                    <span className="impact-icon">📈</span>
-                    <span className="impact-text">{project.impact}</span>
-                  </div>
+                    <div className="project-impact">
+                      <span className="impact-icon">📈</span>
+                      <span className="impact-text">{project.impact}</span>
+                    </div>
 
-                  <div className="project-actions">
-                    <button 
-                      className="action-btn details"
-                      onClick={() => { setSelectedProject(project); setModalTab('info'); }}
-                    >
-                      <span>{'{ }'}</span> Details
-                    </button>
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="action-btn demo"
-                    >
-                      <span>→</span> Live Demo
-                    </a>
-                  </div>
-                </article>
-              ))}
+                    <div className="project-actions">
+                      <button
+                        className="action-btn details"
+                        onClick={() => { setSelectedProject(project); setModalTab('info'); }}
+                      >
+                        <span>{'{ }'}</span> Details
+                      </button>
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="action-btn demo"
+                        >
+                          <span>→</span> Live Demo
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </section>
 
